@@ -111,6 +111,7 @@ function fillSiteForm() {
   document.getElementById('s-title').value = site.siteTitle || '';
   document.getElementById('s-tagline').value = site.tagline || '';
   document.getElementById('s-seal').value = site.sealText || '';
+  document.getElementById('s-avatar').value = site.avatarImage || '';
   document.getElementById('s-badge1').value = (site.badges || [])[0] || '';
   document.getElementById('s-badge2').value = (site.badges || [])[1] || '';
   document.getElementById('s-badge3').value = (site.badges || [])[2] || '';
@@ -152,6 +153,7 @@ document.getElementById('save-site').addEventListener('click', () => {
   site.siteTitle = document.getElementById('s-title').value.trim();
   site.tagline = document.getElementById('s-tagline').value.trim();
   site.sealText = document.getElementById('s-seal').value.trim();
+  site.avatarImage = document.getElementById('s-avatar').value.trim();
   site.badges = [document.getElementById('s-badge1').value.trim(), document.getElementById('s-badge2').value.trim(), document.getElementById('s-badge3').value.trim()].filter(Boolean);
   site.heroImage = document.getElementById('s-hero').value.trim();
   site.freeSamplesLink = document.getElementById('s-samples').value.trim();
