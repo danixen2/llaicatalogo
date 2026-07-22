@@ -345,9 +345,9 @@ nav.topnav .search {
 
 .card h3 { font-size: 1.02rem; margin: 0; }
 
-.card .tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.tags { display: flex; gap: 5px; flex-wrap: wrap; }
 
-.card .tag {
+.tag {
   font-size: 0.68rem;
   font-weight: 700;
   background: var(--pink-soft);
