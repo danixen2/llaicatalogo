@@ -78,6 +78,17 @@ function applySiteSettings() {
   const badgesEl = document.getElementById('badges');
   badgesEl.innerHTML = (s.badges || []).map(b => `<span class="badge-pill">${escapeHtml(b)}</span>`).join('');
 
+  const avatarImg = document.getElementById('avatar-img');
+  const avatarPlaceholder = document.getElementById('avatar-placeholder');
+  if (s.avatarImage) {
+    avatarImg.src = s.avatarImage;
+    avatarImg.classList.remove('hidden');
+    avatarPlaceholder.style.display = 'none';
+  } else {
+    avatarImg.classList.add('hidden');
+    avatarPlaceholder.style.display = 'flex';
+  }
+
   const bannerImg = document.getElementById('hero-banner-img');
   if (s.heroImage) { bannerImg.src = s.heroImage; bannerImg.classList.remove('hidden'); }
   else { bannerImg.classList.add('hidden'); }
