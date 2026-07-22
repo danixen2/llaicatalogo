@@ -3,7 +3,11 @@
     "id": "pack-001",
     "name": "Neón Tokio",
     "category": "anime",
-    "tags": ["cyberpunk", "retratos", "24 imágenes"],
+    "tags": [
+      "cyberpunk",
+      "retratos",
+      "24 imágenes"
+    ],
     "image": "https://images.unsplash.com/photo-1615751072497-5f5169febe17?q=80&w=900&auto=format&fit=crop",
     "description": "24 retratos estilo anime cyberpunk, con paleta neón y lluvia urbana de fondo. Pensado para avatares, portadas de perfil y wallpapers. Incluye variantes de expresión y ángulo de cámara para que tengas opciones a la hora de elegir tu favorita.",
     "purchaseLink": "https://tu-tienda.com/pack-neon-tokio",
@@ -15,7 +19,11 @@
     "id": "pack-002",
     "name": "Retratos Clásicos",
     "category": "realista",
-    "tags": ["estudio", "retrato", "18 imágenes"],
+    "tags": [
+      "estudio",
+      "retrato",
+      "18 imágenes"
+    ],
     "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop",
     "description": "18 retratos hiperrealistas de estudio con iluminación cinematográfica y alta resolución. Ideal para quienes buscan un estilo elegante y atemporal.",
     "purchaseLink": "https://tu-tienda.com/pack-retratos-clasicos",
@@ -27,12 +35,40 @@
     "id": "pack-003",
     "name": "Reinos Perdidos",
     "category": "fantasia",
-    "tags": ["épico", "paisajes", "30 imágenes"],
+    "tags": [
+      "épico",
+      "paisajes",
+      "30 imágenes"
+    ],
     "image": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=900&auto=format&fit=crop",
     "description": "30 escenas de fantasía épica: castillos, criaturas y paisajes imposibles en estilo de pintura digital. Perfecto para portadas de historias y ambientación.",
     "purchaseLink": "https://tu-tienda.com/pack-reinos-perdidos",
     "sampleLink": "https://tu-tienda.com/muestras/pack-reinos-perdidos",
     "featured": true,
     "publishedAt": "2026-05-20"
+  },
+  {
+    "id": "pack-1784764615017",
+    "name": "Ayumu Uehara (Cow Bikini Print) 750 JPY",
+    "category": "anime",
+    "image": "",
+    "description": "",
+    "tags": [
+      "Uehara Ayumu",
+      "Love Live!",
+      "Nijigasaki",
+      "Videos",
+      "Images",
+      "Hetero",
+      "Vanilla",
+      "Cosplay"
+    ],
+    "purchaseLink": "https://liveposting.booth.pm/items/8503500",
+    "sampleLink": "https://www.pixiv.net/en/artworks/145941959",
+    "name_en": "Ayumu Uehara (Cow Bikini Print) 750 JPY",
+    "description_en": "",
+    "name_ja": "上原步夢 (牛柄ビキニ) 750 JPY",
+    "description_ja": "",
+    "publishedAt": "2026-06-13"
   }
 ]
