@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin — Catálogo</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/admin.css">
+</head>
+<body>
+
+<div class="admin-wrap">
+  <h1>💜 Panel del catálogo</h1>
+  <p class="lede">Página privada — no la compartas ni la enlaces desde tu catálogo público.</p>
+
+  <div id="status" class="status hidden"></div>
+
+  <div class="field" style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px;">
+    <h2 style="margin-top:0;">🔌 Conexión con GitHub</h2>
+    <form id="cfg-form">
+      <div class="row2">
+        <div class="field"><label>Usuario u organización</label><input id="cfg-owner" required placeholder="tu-usuario"></div>
+        <div class="field"><label>Repositorio</label><input id="cfg-repo" required placeholder="mi-catalogo"></div>
+      </div>
+      <div class="field"><label>Rama</label><input id="cfg-branch" value="main"></div>
+      <div class="field">
+        <label>Token fine-grained (Contents: Read and write)</label>
+        <input id="cfg-token" type="password" required placeholder="github_pat_...">
+        <small class="help">Se guarda solo en tu navegador. Nunca se comparte.</small>
+      </div>
+      <button class="btn-solid" type="submit">Probar conexión y conectar</button>
+      <button class="btn-outline" type="button" id="cfg-forget">Olvidar datos</button>
+    </form>
+  </div>
+
+  <div id="editor" class="hidden">
+    <div class="tabs">
+      <button class="btn-outline tab-btn active" data-tab="site">🖼️ Portada</button>
+      <button class="btn-outline tab-btn" data-tab="cats">🗂️ Categorías</button>
+      <button class="btn-outline tab-btn" data-tab="contact">✉️ Contacto</button>
+      <button class="btn-outline tab-btn" data-tab="products">🎁 Productos</button>
+    </div>
+
+    <!-- SITE TAB -->
+    <div class="tab-panel" data-panel="site">
+      <div class="field" style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px;">
+        <h2 style="margin-top:0;">Portada</h2>
+        <div class="row2">
+          <div class="field"><label>Nombre de marca</label><input id="s-brand"></div>
+          <div class="field"><label>Título del sitio</label><input id="s-title"></div>
+        </div>
+        <div class="field"><label>Bajada / tagline</label><textarea id="s-tagline"></textarea></div>
+        <div class="field"><label>Texto del sello (ej: "Est. 2024")</label><input id="s-seal"></div>
+        <div class="row3">
+          <div class="field"><label>Badge 1</label><input id="s-badge1"></div>
+          <div class="field"><label>Badge 2</label><input id="s-badge2"></div>
+          <div class="field"><label>Badge 3</label><input id="s-badge3"></div>
+        </div>
+        <div class="field">
+          <label>Imagen de portada (URL, opcional)</label>
+          <input id="s-hero" placeholder="https://...">
+          <small class="help">Tamaño recomendado: 1500 × 500 px (proporción 3:1). Si subís otra medida, se recorta para mantener esa proporción, así que centrá lo importante de la imagen.</small>
+        </div>
+        <div class="field"><label>Link de "Muestras Gratis" general</label><input id="s-samples"></div>
+        <div class="field"><label>Aviso / disclaimer</label><textarea id="s-disclaimer"></textarea></div>
+        <button class="btn-solid" id="save-site">Guardar portada</button>
+      </div>
+    </div>
+
+    <!-- CATEGORIES TAB -->
+    <div class="tab-panel hidden" data-panel="cats">
+      <div class="field" style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px;">
+        <h2 style="margin-top:0;">Categorías</h2>
+        <div id="cat-rows"></div>
+        <button class="btn-outline" id="add-cat" type="button">+ Agregar categoría</button>
+        <div style="margin-top:16px;"><button class="btn-solid" id="save-cats">Guardar categorías</button></div>
+      </div>
+    </div>
+
+    <!-- CONTACT TAB -->
+    <div class="tab-panel hidden" data-panel="contact">
+      <div class="field" style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px;">
+        <h2 style="margin-top:0;">Contacto</h2>
+        <div class="row2">
+          <div class="field"><label>Email</label><input id="c-email"></div>
+          <div class="field"><label>Twitter / X (URL)</label><input id="c-twitter"></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Instagram (URL)</label><input id="c-instagram"></div>
+          <div class="field"><label>Discord (URL)</label><input id="c-discord"></div>
+        </div>
+        <button class="btn-solid" id="save-contact">Guardar contacto</button>
+      </div>
+    </div>
+
+    <!-- PRODUCTS TAB -->
+    <div class="tab-panel hidden" data-panel="products">
+      <div class="field" style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px;">
+        <h2 style="margin-top:0;">Agregar nuevo pack</h2>
+        <form id="add-form">
+          <div class="row2">
+            <div class="field"><label>Título (Español)</label><input id="new-name" required></div>
+            <div class="field"><label>Categoría</label><select id="new-category"></select></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Imagen de portada (URL)</label><input id="new-image" placeholder="https://..."></div>
+            <div class="field">
+              <label>Fecha de publicación</label>
+              <input id="new-published" type="date">
+              <small class="help">Usala para controlar el orden de aparición — no tiene que coincidir con el día que lo cargás acá.</small>
+            </div>
+          </div>
+          <div class="field"><label>Descripción (Español) — se muestra al hacer clic en el producto</label><textarea id="new-desc"></textarea></div>
+          <div class="field"><label>Tags (separados por coma, sin traducción)</label><input id="new-tags" placeholder="cyberpunk, retratos, 24 imágenes"></div>
+          <div class="row2">
+            <div class="field"><label>Link de compra</label><input id="new-purchase" placeholder="https://..."></div>
+            <div class="field"><label>Link de muestra gratis</label><input id="new-sample" placeholder="https://..."></div>
+          </div>
+          <div style="border-top:1px dashed var(--line); margin:16px 0; padding-top:14px;">
+            <small class="help" style="margin-bottom:10px; display:block;">🌍 Traducciones opcionales. Si las dejás vacías, ese idioma muestra el texto en español.</small>
+            <div class="field"><label>Título (English)</label><input id="new-name-en"></div>
+            <div class="field"><label>Descripción (English)</label><textarea id="new-desc-en"></textarea></div>
+            <div class="field"><label>Título (日本語)</label><input id="new-name-ja"></div>
+            <div class="field"><label>Descripción (日本語)</label><textarea id="new-desc-ja"></textarea></div>
+          </div>
+          <button class="btn-solid" type="submit">Agregar a la lista</button>
+        </form>
+      </div>
+
+      <div class="field" style="background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; margin-top:16px;">
+        <h2 style="margin-top:0;">Packs actuales</h2>
+        <div id="product-list"></div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:6px;">
+        <button class="btn-solid" id="save-products">Guardar productos en GitHub</button>
+        <button class="btn-outline" id="reload-products">Recargar desde GitHub</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/admin.js"></script>
+</body>
+</html>

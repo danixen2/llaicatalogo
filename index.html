@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Packs IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-banner-wrap">
+    <img id="hero-banner-img" class="hero-banner-img hidden" src="" alt="Portada">
+  </div>
+  <div class="wrap hero-inner">
+    <div class="seal"><div class="seal-text" id="seal-text">Est. 2024</div></div>
+    <div class="hero-text">
+      <p class="brand" id="brand-name">Tu Marca</p>
+      <h1 id="site-title">AI Image Packs</h1>
+      <p class="tagline" id="tagline">Cargando…</p>
+      <div class="badges" id="badges"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="topnav wrap">
+  <a class="nav-link active" href="index.html" id="nav-home">Inicio</a>
+  <a class="nav-link" href="#grid" id="nav-packs">Packs</a>
+  <a class="nav-link" id="nav-samples" href="#">Muestras Gratis</a>
+  <a class="nav-link" href="#categorias" id="nav-categories">Categorías</a>
+  <a class="nav-link" id="nav-contact" href="#contacto">Contacto</a>
+  <input class="search" id="search" type="text" placeholder="Buscar packs...">
+  <div class="lang-switch" id="lang-switch"></div>
+</nav>
+
+<div class="wrap">
+  <div class="layout">
+    <aside>
+      <div class="panel-card" id="categorias">
+        <h2 id="categorias-title">🗂️ Categorías</h2>
+        <ul class="cat-list" id="cat-list"></ul>
+      </div>
+      <div class="panel-card info-box" id="disclaimer-box" style="margin-top:20px;"></div>
+    </aside>
+
+    <main>
+      <div class="grid-header">
+        <h2 class="section-title" id="grid-title" style="margin:0;">✨ Packs</h2>
+        <div class="sort-control">
+          <label id="sort-label" for="sort-select">Ordenar:</label>
+          <select id="sort-select">
+            <option value="newest">Más nuevos primero</option>
+            <option value="oldest">Más antiguos primero</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid" id="grid-content"><p class="empty">Cargando catálogo…</p></div>
+    </main>
+  </div>
+
+  <div class="info-grid">
+    <div class="panel-card">
+      <h2 id="muestras-title">🎁 Muestras Gratis</h2>
+      <p id="muestras-desc">Descargá imágenes de muestra y probá la calidad de mis packs antes de comprar.</p>
+      <a class="cta-btn" id="samples-btn" href="#">Ver muestras</a>
+    </div>
+    <div class="panel-card">
+      <h2 id="como-funciona-title">💫 Cómo Funciona</h2>
+      <ul class="steps">
+        <li><span class="num">1</span><div><strong id="step1-title">Elegí un pack</strong><span id="step1-desc">Explorá y seleccioná tu favorito.</span></div></li>
+        <li><span class="num">2</span><div><strong id="step2-title">Descargá y disfrutá</strong><span id="step2-desc">Recibí tu pack al instante.</span></div></li>
+        <li><span class="num">3</span><div><strong id="step3-title">Creá y compartí</strong><span id="step3-desc">Usalo para lo que quieras inspirarte.</span></div></li>
+      </ul>
+    </div>
+    <div class="panel-card" id="contacto">
+      <h2 id="duda-title">💌 ¿Tenés alguna duda?</h2>
+      <p id="contact-text">Estoy para ayudarte.</p>
+      <a class="cta-btn" id="contact-btn" href="#">Contactar</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span id="footer-brand">© 2024 Tu Marca — Hecho con amor para fans</span>
+    <span id="footer-social"></span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/home.js"></script>
+</body>
+</html>

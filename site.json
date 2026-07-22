@@ -1,0 +1,22 @@
+{
+  "brandName": "Tu Marca",
+  "siteTitle": "AI Image Packs",
+  "tagline": "Imágenes únicas hechas con IA, para tus proyectos y tu colección",
+  "sealText": "Est. 2024",
+  "badges": ["Alta calidad", "Listas para usar", "Hechas con pasión"],
+  "heroImage": "",
+  "categories": [
+    { "id": "anime", "label": "Anime", "icon": "⭐" },
+    { "id": "realista", "label": "Realista", "icon": "📷" },
+    { "id": "fantasia", "label": "Fantasía", "icon": "🔮" }
+  ],
+  "freeSamplesLink": "",
+  "disclaimer": "Imágenes creadas con IA. Uso personal permitido. No para uso comercial.",
+  "contact": {
+    "email": "tuemail@ejemplo.com",
+    "twitter": "",
+    "instagram": "",
+    "discord": "",
+    "buttonLabel": "Contactar"
+  }
+}
