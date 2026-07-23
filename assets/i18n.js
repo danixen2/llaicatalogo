@@ -1,9 +1,9 @@
 const I18N = {
   es: {
     nav_home: 'Inicio', nav_packs: 'Packs', nav_samples: 'Muestras Gratis',
-    nav_categories: 'Categorías', nav_contact: 'Contacto',
+    nav_categories: 'Grupos Idol', nav_contact: 'Contacto',
     search_placeholder: 'Buscar packs...',
-    categorias_title: 'Categorías', todos: 'Todos', packs_title: 'Packs',
+    categorias_title: 'Grupos Idol', todos: 'Todos', packs_title: 'Packs',
     empty_msg: 'No hay packs que coincidan con tu búsqueda.', ver_mas: 'Ver más',
     muestras_title: 'Muestras Gratis',
     muestras_desc: 'Descargá imágenes de muestra y probá la calidad de mis packs antes de comprar.',
@@ -19,12 +19,17 @@ const I18N = {
     mas_packs_de: 'Más packs de', notfound_msg: 'No encontramos ese pack.',
     loading_msg: 'Cargando…',
     sort_label: 'Ordenar:', sort_newest: 'Más nuevos primero', sort_oldest: 'Más antiguos primero',
+    sort_price_asc: 'Precio: menor a mayor', sort_price_desc: 'Precio: mayor a menor',
+    tags_title: 'Tags', ver_todos_tags: 'Ver todos los tags →',
+    tags_page_title: 'Todos los tags', tags_search_placeholder: 'Buscar tag...',
+    price_filter_title: 'Filtrar por precio', price_min: 'Mín', price_max: 'Máx', price_apply: 'Aplicar',
+    price_clear: 'Quitar filtro',
   },
   en: {
     nav_home: 'Home', nav_packs: 'Packs', nav_samples: 'Free Samples',
-    nav_categories: 'Categories', nav_contact: 'Contact',
+    nav_categories: 'Idol Groups', nav_contact: 'Contact',
     search_placeholder: 'Search packs...',
-    categorias_title: 'Categories', todos: 'All', packs_title: 'Packs',
+    categorias_title: 'Idol Groups', todos: 'All', packs_title: 'Packs',
     empty_msg: 'No packs match your search.', ver_mas: 'View more',
     muestras_title: 'Free Samples',
     muestras_desc: 'Download sample images and try the quality of my packs before buying.',
@@ -40,12 +45,17 @@ const I18N = {
     mas_packs_de: 'More packs from', notfound_msg: "We couldn't find that pack.",
     loading_msg: 'Loading…',
     sort_label: 'Sort:', sort_newest: 'Newest first', sort_oldest: 'Oldest first',
+    sort_price_asc: 'Price: low to high', sort_price_desc: 'Price: high to low',
+    tags_title: 'Tags', ver_todos_tags: 'View all tags →',
+    tags_page_title: 'All tags', tags_search_placeholder: 'Search tag...',
+    price_filter_title: 'Filter by price', price_min: 'Min', price_max: 'Max', price_apply: 'Apply',
+    price_clear: 'Clear filter',
   },
   ja: {
     nav_home: 'ホーム', nav_packs: 'パック', nav_samples: '無料サンプル',
-    nav_categories: 'カテゴリー', nav_contact: 'お問い合わせ',
+    nav_categories: 'アイドルグループ', nav_contact: 'お問い合わせ',
     search_placeholder: 'パックを検索...',
-    categorias_title: 'カテゴリー', todos: 'すべて', packs_title: 'パック',
+    categorias_title: 'アイドルグループ', todos: 'すべて', packs_title: 'パック',
     empty_msg: '検索条件に一致するパックがありません。', ver_mas: '詳細を見る',
     muestras_title: '無料サンプル',
     muestras_desc: '購入前にサンプル画像をダウンロードして品質をお試しください。',
@@ -61,6 +71,11 @@ const I18N = {
     mas_packs_de: '関連パック：', notfound_msg: 'そのパックが見つかりませんでした。',
     loading_msg: '読み込み中…',
     sort_label: '並び替え：', sort_newest: '新しい順', sort_oldest: '古い順',
+    sort_price_asc: '価格が安い順', sort_price_desc: '価格が高い順',
+    tags_title: 'タグ', ver_todos_tags: 'すべてのタグを見る →',
+    tags_page_title: 'すべてのタグ', tags_search_placeholder: 'タグを検索...',
+    price_filter_title: '価格で絞り込む', price_min: '最小', price_max: '最大', price_apply: '適用',
+    price_clear: 'フィルターを解除',
   },
 };
 
@@ -77,11 +92,24 @@ function setLang(lang) { localStorage.setItem('catalogo_lang', lang); }
 function t(key, lang) { return (I18N[lang] && I18N[lang][key]) || I18N.es[key] || key; }
 
 // Título/descripción: usa la versión del idioma si existe, si no cae al español.
-// Tags, categoría, nombre de marca NUNCA se traducen (se muestran tal cual se cargaron).
+// Tags, categoría (Grupos Idol) y nombre de marca NUNCA se traducen: se muestran tal cual se cargaron.
 function localizedField(obj, field, lang) {
   if (lang === 'es') return obj[field] || '';
   const key = field + '_' + lang;
   return (obj[key] && obj[key].trim()) ? obj[key] : (obj[field] || '');
+}
+
+function formatDate(dateStr, lang) {
+  if (!dateStr) return '';
+  const locales = { es: 'es-ES', en: 'en-US', ja: 'ja-JP' };
+  try {
+    return new Intl.DateTimeFormat(locales[lang] || 'es-ES', { year: 'numeric', month: 'short', day: 'numeric' }).format(new Date(dateStr + 'T00:00:00'));
+  } catch (e) { return dateStr; }
+}
+
+function formatYen(amount) {
+  if (amount === undefined || amount === null || amount === '') return '';
+  return '¥' + Number(amount).toLocaleString('ja-JP');
 }
 
 function renderLangSwitcher(containerId, lang, onChange) {
