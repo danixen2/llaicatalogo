@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todos los tags</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero" style="border-radius:0 0 24px 24px; padding-bottom:16px;">
+  <div class="wrap hero-inner" style="gap:16px; padding-top:20px; justify-content:space-between;">
+    <p class="brand" id="brand-name" style="margin:0;">Tu Marca</p>
+    <div class="lang-switch" id="lang-switch"></div>
+  </div>
+</header>
+
+<div class="wrap" style="padding-bottom:60px;">
+  <a class="back-link" id="back-link" href="index.html">← Volver al catálogo</a>
+  <h1 id="page-title" style="font-family:'Baloo 2', sans-serif; color:var(--purple-dark); margin:18px 0 14px;">Todos los tags</h1>
+  <input type="text" id="tag-search" class="tag-search-input" placeholder="Buscar tag...">
+  <div class="tag-cloud tag-cloud-full" id="all-tags"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap"><span id="footer-brand">© 2024 Tu Marca</span></div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/tags.js"></script>
+</body>
+</html>
