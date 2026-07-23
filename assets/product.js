@@ -46,6 +46,10 @@ async function init() {
         <span class="badge-pill" style="background:var(--purple); display:inline-block; margin-bottom:10px;">${escapeHtml(catMap[product.category] || product.category || '')}</span>
         <h1>${escapeHtml(name)}</h1>
         <div class="tags">${(product.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
+        <div class="meta-row" style="margin-top:10px;">
+          <span class="pub-date">${escapeHtml(formatDate(product.publishedAt, lang))}</span>
+          <span class="price-tag" style="font-size:1.1rem;">${escapeHtml(formatYen(product.price))}</span>
+        </div>
         <p class="desc" style="margin-top:16px;">${escapeHtml(description)}</p>
         <div class="actions">
           ${product.sampleLink ? `<a class="btn-lg ghost" href="${escapeHtml(product.sampleLink)}" target="_blank" rel="noopener">${t('ver_muestra_gratis_btn', lang)}</a>` : ''}
