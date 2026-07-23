@@ -49,7 +49,7 @@
   },
   {
     "id": "pack-1784764615017",
-    "name": "Ayumu Uehara (Cow Bikini Print) 750 JPY",
+    "name": "Ayumu Uehara (Cow Bikini Print)",
     "category": "anime",
     "image": "https://iili.io/CNjiQqJ.jpg",
     "description": "",
@@ -69,6 +69,7 @@
     "description_en": "",
     "name_ja": "上原步夢 (牛柄ビキニ) 750 JPY",
     "description_ja": "",
-    "publishedAt": "2026-06-13"
+    "publishedAt": "2026-06-13",
+    "price": 750
   }
 ]
