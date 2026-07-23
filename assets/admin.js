@@ -277,6 +277,7 @@ function renderProductList() {
         </div>
         <div class="field"><label>Imagen de portada</label><input data-i="${i}" data-f="image" value="${escapeAttr(p.image)}"></div>
         <div class="field"><label>Fecha de publicación</label><input data-i="${i}" data-f="publishedAt" type="date" value="${escapeAttr(p.publishedAt)}"></div>
+        <div class="field"><label>Precio (¥ yenes)</label><input data-i="${i}" data-f="price" type="number" min="0" value="${p.price ?? 0}"></div>
       </div>
       <div class="field"><label>Descripción (Español)</label><textarea data-i="${i}" data-f="description">${escapeHtml(p.description || '')}</textarea></div>
       <div class="field"><label>Tags (separados por coma, sin traducción)</label><input data-i="${i}" data-f="tags" value="${escapeAttr((p.tags || []).join(', '))}"></div>
@@ -298,7 +299,9 @@ function renderProductList() {
     el.addEventListener('input', (e) => {
       const i = parseInt(e.target.dataset.i, 10);
       const f = e.target.dataset.f;
-      products[i][f] = f === 'tags' ? e.target.value.split(',').map(t => t.trim()).filter(Boolean) : e.target.value;
+      if (f === 'tags') products[i][f] = e.target.value.split(',').map(t => t.trim()).filter(Boolean);
+      else if (f === 'price') products[i][f] = e.target.value !== '' ? Number(e.target.value) : 0;
+      else products[i][f] = e.target.value;
     });
   });
   container.querySelectorAll('[data-del]').forEach(btn => {
@@ -328,6 +331,7 @@ document.getElementById('add-form').addEventListener('submit', (e) => {
     name_ja: document.getElementById('new-name-ja').value.trim(),
     description_ja: document.getElementById('new-desc-ja').value.trim(),
     publishedAt: document.getElementById('new-published').value || new Date().toISOString().slice(0, 10),
+    price: document.getElementById('new-price').value !== '' ? Number(document.getElementById('new-price').value) : 0,
   });
   e.target.reset();
   renderProductList();
