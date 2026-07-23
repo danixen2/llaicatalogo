@@ -33,7 +33,7 @@
   <a class="nav-link active" href="index.html" id="nav-home">Inicio</a>
   <a class="nav-link" href="#grid" id="nav-packs">Packs</a>
   <a class="nav-link" id="nav-samples" href="#">Muestras Gratis</a>
-  <a class="nav-link" href="#categorias" id="nav-categories">Categorías</a>
+  <a class="nav-link" href="#categorias" id="nav-categories">Grupos Idol</a>
   <a class="nav-link" id="nav-contact" href="#contacto">Contacto</a>
   <input class="search" id="search" type="text" placeholder="Buscar packs...">
   <div class="lang-switch" id="lang-switch"></div>
@@ -43,9 +43,34 @@
   <div class="layout">
     <aside>
       <div class="panel-card" id="categorias">
-        <h2 id="categorias-title">🗂️ Categorías</h2>
+        <h2 id="categorias-title">🎤 Grupos Idol</h2>
         <ul class="cat-list" id="cat-list"></ul>
       </div>
+
+      <div class="panel-card" style="margin-top:20px;">
+        <h2 id="tags-title">🏷️ Tags</h2>
+        <div class="tag-cloud" id="tag-cloud"></div>
+        <a href="tags.html" id="ver-todos-tags" class="see-all-link">Ver todos los tags →</a>
+      </div>
+
+      <div class="panel-card" style="margin-top:20px;">
+        <h2 id="price-filter-title">💴 Filtrar por precio</h2>
+        <div class="price-range-row">
+          <div class="price-field">
+            <label id="price-min-label">Mín</label>
+            <input type="number" id="price-min" min="0" placeholder="¥0">
+          </div>
+          <div class="price-field">
+            <label id="price-max-label">Máx</label>
+            <input type="number" id="price-max" min="0" placeholder="¥9999">
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <button class="btn-outline" id="price-apply-btn" type="button">Aplicar</button>
+          <button class="btn-outline" id="price-clear-btn" type="button">Quitar filtro</button>
+        </div>
+      </div>
+
       <div class="panel-card info-box" id="disclaimer-box" style="margin-top:20px;"></div>
     </aside>
 
@@ -57,6 +82,8 @@
           <select id="sort-select">
             <option value="newest">Más nuevos primero</option>
             <option value="oldest">Más antiguos primero</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
           </select>
         </div>
       </div>
