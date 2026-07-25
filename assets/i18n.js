@@ -27,6 +27,9 @@ const I18N = {
     pedidos_title: '📦 Hacer un Pedido', pedido_btn: 'Hacer pedido',
     duda_desc_generic: 'Encontrame en mis redes o escribime directamente.',
     contacto_page_title: 'Dónde encontrarme', no_contacts_msg: 'Todavía no cargué mis contactos.',
+    disclaimer_text: 'Imágenes creadas con IA. Uso personal permitido. No para uso comercial.',
+    how_it_works_text: 'Este es mi catálogo virtual: acá podés ver todo mi trabajo. Si te interesa algún pack, hacé clic en él para ir a un sitio externo donde podés ver muestras o comprarlo. También tenés espacios para contactarme o hacerme un pedido personalizado si preferís esa opción.',
+    order_text: '¿Buscás algo personalizado? Escribime cómo lo imaginás y armamos tu pedido a medida.',
   },
   en: {
     nav_home: 'Home', nav_packs: 'Packs', nav_samples: 'Free Samples',
@@ -56,6 +59,9 @@ const I18N = {
     pedidos_title: '📦 Place an Order', pedido_btn: 'Place order',
     duda_desc_generic: 'Find me on my socials or write to me directly.',
     contacto_page_title: 'Where to find me', no_contacts_msg: "I haven't added my contacts yet.",
+    disclaimer_text: 'Images created with AI. Personal use allowed. Not for commercial use.',
+    how_it_works_text: "This is my virtual catalog: here you can see all my work. If you're interested in a pack, click on it to go to an external site where you can view samples or buy it. There are also spaces to contact me or place a custom order if you prefer that option.",
+    order_text: 'Looking for something custom? Tell me how you picture it and we\u2019ll put together your order.',
   },
   ja: {
     nav_home: 'ホーム', nav_packs: 'パック', nav_samples: '無料サンプル',
@@ -85,6 +91,9 @@ const I18N = {
     pedidos_title: '📦 注文する', pedido_btn: '注文する',
     duda_desc_generic: 'SNSで見つけるか、直接メッセージしてください。',
     contacto_page_title: '連絡先', no_contacts_msg: 'まだ連絡先を追加していません。',
+    disclaimer_text: 'AIで作成された画像です。個人利用のみ可能で、商用利用はできません。',
+    how_it_works_text: 'ここは私の作品をすべて見られるバーチャルカタログです。気になるパックがあれば、クリックすると外部サイトでサンプルを見たり購入したりできます。また、直接連絡したり、オーダーメイドの注文をすることもできます。',
+    order_text: 'ご希望のイメージを教えていただければ、オーダーメイドで制作いたします。',
   },
 };
 
