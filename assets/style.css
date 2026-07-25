@@ -570,3 +570,49 @@ footer.site-footer a { text-decoration: none; opacity: 0.9; margin-left: 10px; }
 .related-title { margin-top: 30px; }
 
 .loading-msg, .notfound { text-align: center; padding: 80px 0; color: var(--text-muted); }
+
+/* ---------- Contact page (linktree style) ---------- */
+.contact-list { display: flex; flex-direction: column; gap: 12px; }
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border-radius: 100px;
+  box-shadow: var(--shadow);
+  padding: 12px 20px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform .15s ease;
+}
+
+.contact-item:hover { transform: translateY(-2px); }
+
+.contact-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--purple-soft);
+}
+
+.contact-icon-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--purple-soft);
+  font-size: 1.2rem;
+}
+
+.contact-label { flex: 1; font-weight: 700; font-family: 'Baloo 2', sans-serif; color: var(--purple-dark); }
+.contact-arrow { color: var(--text-muted); }
+
+/* ---------- Product detail: date under title, price in button ---------- */
+.pub-date-standalone {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 2px 0 12px;
+}
