@@ -3,13 +3,13 @@
   "siteTitle": "AI Image Catalog",
   "tagline": "Imágenes únicas hechas con IA, para tus proyectos y tu colección",
   "sealText": "Danixen",
-  "avatarImage": "",
+  "avatarImage": "https://iili.io/CN4n6DF.png",
   "badges": [
     "NovelAI",
     "Stable Diffusion Neon",
     "ComfyUI"
   ],
-  "heroImage": "",
+  "heroImage": "https://iili.io/CNjw7Jj.jpg",
   "categories": [
     {
       "id": "anime",
