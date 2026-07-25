@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero" style="border-radius:0 0 24px 24px; padding-bottom:24px;">
+  <div class="wrap hero-inner" style="padding-top:24px; justify-content:space-between;">
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div class="avatar-wrap" style="width:80px; height:80px;">
+        <img id="avatar-img" class="avatar-img hidden" src="" alt="Avatar">
+        <div class="avatar-placeholder" id="avatar-placeholder" style="font-size:1.6rem;">🎨</div>
+      </div>
+      <div>
+        <p class="brand" id="brand-name" style="margin:0;">Tu Marca</p>
+        <h1 id="page-title" style="margin:2px 0 0; font-size:1.6rem;">Dónde encontrarme</h1>
+      </div>
+    </div>
+    <div class="lang-switch" id="lang-switch"></div>
+  </div>
+</header>
+
+<div class="wrap" style="max-width:560px; padding-bottom:60px;">
+  <a class="back-link" id="back-link" href="index.html">← Volver al catálogo</a>
+  <div class="contact-list" id="contact-list" style="margin-top:22px;"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap"><span id="footer-brand">© 2024 Tu Marca</span></div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/contact.js"></script>
+</body>
+</html>
