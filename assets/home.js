@@ -102,7 +102,7 @@ function applySiteSettings() {
   document.getElementById('tagline').textContent = s.tagline || '';
   document.getElementById('seal-text').textContent = s.sealText || '';
   document.getElementById('footer-brand').textContent = '© ' + new Date().getFullYear() + ' ' + (s.brandName || '') + ' — ' + t('footer_hecho', L);
-  document.getElementById('disclaimer-box').textContent = s.disclaimer || '';
+  document.getElementById('disclaimer-box').textContent = t('disclaimer_text', L);
 
   const badgesEl = document.getElementById('badges');
   badgesEl.innerHTML = (s.badges || []).map(b => `<span class="badge-pill">${escapeHtml(b)}</span>`).join('');
@@ -127,12 +127,11 @@ function applySiteSettings() {
     document.getElementById('nav-samples').href = s.freeSamplesLink;
   }
 
-  document.getElementById('como-funciona-text').textContent = s.howItWorks || '';
+  document.getElementById('como-funciona-text').textContent = t('how_it_works_text', L);
 
-  const order = s.order || {};
-  document.getElementById('pedidos-desc').textContent = order.text || '';
+  document.getElementById('pedidos-desc').textContent = t('order_text', L);
   const pedidosBtn = document.getElementById('pedidos-btn');
-  if (order.link) { pedidosBtn.href = order.link; pedidosBtn.style.display = ''; }
+  if (s.orderLink) { pedidosBtn.href = s.orderLink; pedidosBtn.style.display = ''; }
   else { pedidosBtn.style.display = 'none'; }
 
   const langParam = '?lang=' + L;
