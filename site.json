@@ -1,15 +1,31 @@
 {
-  "brandName": "Tu Marca",
-  "siteTitle": "AI Image Packs",
+  "brandName": "Love Live IA Posting",
+  "siteTitle": "AI Image Catalog",
   "tagline": "Imágenes únicas hechas con IA, para tus proyectos y tu colección",
-  "sealText": "Est. 2024",
+  "sealText": "Danixen",
   "avatarImage": "",
-  "badges": ["Alta calidad", "Listas para usar", "Hechas con pasión"],
+  "badges": [
+    "NovelAI",
+    "Stable Diffusion Neon",
+    "ComfyUI"
+  ],
   "heroImage": "",
   "categories": [
-    { "id": "anime", "label": "Anime", "icon": "⭐" },
-    { "id": "realista", "label": "Realista", "icon": "📷" },
-    { "id": "fantasia", "label": "Fantasía", "icon": "🔮" }
+    {
+      "id": "anime",
+      "label": "Anime",
+      "icon": "⭐"
+    },
+    {
+      "id": "realista",
+      "label": "Realista",
+      "icon": "📷"
+    },
+    {
+      "id": "fantasia",
+      "label": "Fantasía",
+      "icon": "🔮"
+    }
   ],
   "freeSamplesLink": "",
   "disclaimer": "Imágenes creadas con IA. Uso personal permitido. No para uso comercial.",
@@ -19,6 +35,11 @@
     "link": ""
   },
   "contactLinks": [
-    { "id": "email", "label": "Email", "icon": "", "link": "mailto:tuemail@ejemplo.com" }
+    {
+      "id": "email",
+      "label": "Email",
+      "icon": "",
+      "link": "mailto:tuemail@ejemplo.com"
+    }
   ]
 }
