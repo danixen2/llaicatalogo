@@ -79,14 +79,11 @@ function applyStaticText() {
   document.getElementById('muestras-desc').textContent = t('muestras_desc', L);
   document.getElementById('samples-btn').textContent = t('ver_muestras_btn', L);
   document.getElementById('como-funciona-title').textContent = '💫 ' + t('como_funciona_title', L);
-  document.getElementById('step1-title').textContent = t('step1_title', L);
-  document.getElementById('step1-desc').textContent = t('step1_desc', L);
-  document.getElementById('step2-title').textContent = t('step2_title', L);
-  document.getElementById('step2-desc').textContent = t('step2_desc', L);
-  document.getElementById('step3-title').textContent = t('step3_title', L);
-  document.getElementById('step3-desc').textContent = t('step3_desc', L);
   document.getElementById('duda-title').textContent = '💌 ' + t('duda_title', L);
+  document.getElementById('contact-text').textContent = t('duda_desc_generic', L);
   document.getElementById('contact-btn').textContent = t('contactar_btn', L);
+  document.getElementById('pedidos-title').textContent = t('pedidos_title', L);
+  document.getElementById('pedidos-btn').textContent = t('pedido_btn', L);
   document.getElementById('sort-label').textContent = t('sort_label', L);
   const sortSelect = document.getElementById('sort-select');
   sortSelect.options[0].textContent = t('sort_newest', L);
@@ -130,18 +127,17 @@ function applySiteSettings() {
     document.getElementById('nav-samples').href = s.freeSamplesLink;
   }
 
-  const c = s.contact || {};
-  document.getElementById('contact-text').textContent = t('escribime_a', L) + ' ' + (c.email || '') + ' ' + t('gracias_apoyo', L);
-  if (c.email) {
-    document.getElementById('contact-btn').href = 'mailto:' + c.email;
-    document.getElementById('nav-contact').href = '#contacto';
-  }
+  document.getElementById('como-funciona-text').textContent = s.howItWorks || '';
 
-  const socials = [];
-  if (c.twitter) socials.push(`<a href="${c.twitter}" target="_blank" rel="noopener">Twitter/X</a>`);
-  if (c.instagram) socials.push(`<a href="${c.instagram}" target="_blank" rel="noopener">Instagram</a>`);
-  if (c.discord) socials.push(`<a href="${c.discord}" target="_blank" rel="noopener">Discord</a>`);
-  document.getElementById('footer-social').innerHTML = socials.join('');
+  const order = s.order || {};
+  document.getElementById('pedidos-desc').textContent = order.text || '';
+  const pedidosBtn = document.getElementById('pedidos-btn');
+  if (order.link) { pedidosBtn.href = order.link; pedidosBtn.style.display = ''; }
+  else { pedidosBtn.style.display = 'none'; }
+
+  const langParam = '?lang=' + L;
+  document.getElementById('contact-btn').href = 'contacto.html' + langParam;
+  document.getElementById('nav-contact').href = 'contacto.html' + langParam;
 }
 
 function renderCategories() {
