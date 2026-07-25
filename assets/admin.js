@@ -99,7 +99,7 @@ async function loadSite() {
     site = JSON.parse(fromBase64(data.content));
     fillSiteForm();
     renderCategoryRows();
-    fillContactForm();
+    renderContactRows();
     populateCategorySelect();
   } catch (err) {
     setStatus('Error cargando site.json: ' + err.message, 'err');
@@ -118,14 +118,9 @@ function fillSiteForm() {
   document.getElementById('s-hero').value = site.heroImage || '';
   document.getElementById('s-samples').value = site.freeSamplesLink || '';
   document.getElementById('s-disclaimer').value = site.disclaimer || '';
-}
-
-function fillContactForm() {
-  const c = site.contact || {};
-  document.getElementById('c-email').value = c.email || '';
-  document.getElementById('c-twitter').value = c.twitter || '';
-  document.getElementById('c-instagram').value = c.instagram || '';
-  document.getElementById('c-discord').value = c.discord || '';
+  document.getElementById('s-howitworks').value = site.howItWorks || '';
+  document.getElementById('s-order-text').value = (site.order || {}).text || '';
+  document.getElementById('s-order-link').value = (site.order || {}).link || '';
 }
 
 async function saveSiteJson(successMsg) {
@@ -158,16 +153,49 @@ document.getElementById('save-site').addEventListener('click', () => {
   site.heroImage = document.getElementById('s-hero').value.trim();
   site.freeSamplesLink = document.getElementById('s-samples').value.trim();
   site.disclaimer = document.getElementById('s-disclaimer').value.trim();
+  site.howItWorks = document.getElementById('s-howitworks').value.trim();
+  site.order = {
+    text: document.getElementById('s-order-text').value.trim(),
+    link: document.getElementById('s-order-link').value.trim(),
+  };
   saveSiteJson('Portada guardada');
 });
 
+// ---------- Contact links (linktree-style) ----------
+
+function renderContactRows() {
+  site.contactLinks = site.contactLinks || [];
+  const wrap = document.getElementById('contact-rows');
+  wrap.innerHTML = site.contactLinks.map((c, i) => `
+    <div class="cat-editor-row" style="grid-template-columns: 1fr 1fr 1fr 40px;">
+      <input data-i="${i}" data-f="label" value="${escapeAttr(c.label)}" placeholder="Ej: Discord">
+      <input data-i="${i}" data-f="icon" value="${escapeAttr(c.icon)}" placeholder="URL ícono circular">
+      <input data-i="${i}" data-f="link" value="${escapeAttr(c.link)}" placeholder="https://...">
+      <button class="btn-danger" data-del="${i}" type="button">✕</button>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      const i = parseInt(e.target.dataset.i, 10);
+      site.contactLinks[i][e.target.dataset.f] = e.target.value;
+    });
+  });
+  wrap.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      site.contactLinks.splice(parseInt(btn.dataset.del, 10), 1);
+      renderContactRows();
+    });
+  });
+}
+
+document.getElementById('add-contact').addEventListener('click', () => {
+  site.contactLinks = site.contactLinks || [];
+  site.contactLinks.push({ id: 'c-' + Date.now(), label: '', icon: '', link: '' });
+  renderContactRows();
+});
+
 document.getElementById('save-contact').addEventListener('click', () => {
-  site.contact = {
-    email: document.getElementById('c-email').value.trim(),
-    twitter: document.getElementById('c-twitter').value.trim(),
-    instagram: document.getElementById('c-instagram').value.trim(),
-    discord: document.getElementById('c-discord').value.trim(),
-  };
   saveSiteJson('Contacto guardado');
 });
 
@@ -253,7 +281,7 @@ async function saveProducts() {
   }
 }
 
-function renderProductList() {
+function renderProductList(filterText) {
   const container = document.getElementById('product-list');
   if (products.length === 0) {
     container.innerHTML = '<p style="color:var(--text-muted); font-size:0.88rem;">Todavía no agregaste ningún pack.</p>';
@@ -262,13 +290,25 @@ function renderProductList() {
   const catMap = {};
   (site.categories || []).forEach(c => catMap[c.id] = c.label);
 
-  container.innerHTML = products.map((p, i) => `
-    <div class="product-item">
-      <div class="top">
+  const q = (filterText || '').toLowerCase().trim();
+  const indexes = products
+    .map((p, i) => i)
+    .filter(i => !q || (products[i].name || '').toLowerCase().includes(q));
+
+  if (indexes.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted); font-size:0.88rem;">No hay packs que coincidan con esa búsqueda.</p>';
+    return;
+  }
+
+  container.innerHTML = indexes.map(i => {
+    const p = products[i];
+    return `
+    <details class="product-item">
+      <summary>
         <strong>${escapeHtml(p.name || '(sin título)')}</strong>
         <button class="btn-danger" data-del="${i}" type="button">Eliminar</button>
-      </div>
-      <div class="field"><label>Título</label><input data-i="${i}" data-f="name" value="${escapeAttr(p.name)}"></div>
+      </summary>
+      <div class="field" style="margin-top:12px;"><label>Título</label><input data-i="${i}" data-f="name" value="${escapeAttr(p.name)}"></div>
       <div class="row2">
         <div class="field"><label>Categoría</label>
           <select data-i="${i}" data-f="category">
@@ -292,8 +332,9 @@ function renderProductList() {
         <div class="field"><label>Título (日本語)</label><input data-i="${i}" data-f="name_ja" value="${escapeAttr(p.name_ja)}"></div>
         <div class="field"><label>Descripción (日本語)</label><textarea data-i="${i}" data-f="description_ja">${escapeHtml(p.description_ja || '')}</textarea></div>
       </details>
-    </div>
-  `).join('');
+    </details>
+  `;
+  }).join('');
 
   container.querySelectorAll('[data-f]').forEach(el => {
     el.addEventListener('input', (e) => {
@@ -303,13 +344,17 @@ function renderProductList() {
       else if (f === 'price') products[i][f] = e.target.value !== '' ? Number(e.target.value) : 0;
       else products[i][f] = e.target.value;
     });
+    // Evita que escribir en un campo abra/cierre el <details> padre.
+    el.addEventListener('click', (e) => e.stopPropagation());
   });
   container.querySelectorAll('[data-del]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       const i = parseInt(btn.dataset.del, 10);
       if (confirm('¿Eliminar "' + (products[i].name || 'este pack') + '"?')) {
         products.splice(i, 1);
-        renderProductList();
+        renderProductList(document.getElementById('product-search').value);
       }
     });
   });
@@ -334,7 +379,11 @@ document.getElementById('add-form').addEventListener('submit', (e) => {
     price: document.getElementById('new-price').value !== '' ? Number(document.getElementById('new-price').value) : 0,
   });
   e.target.reset();
-  renderProductList();
+  renderProductList(document.getElementById('product-search').value);
+});
+
+document.getElementById('product-search').addEventListener('input', (e) => {
+  renderProductList(e.target.value);
 });
 
 document.getElementById('save-products').addEventListener('click', saveProducts);
