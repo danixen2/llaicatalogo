@@ -117,10 +117,7 @@ function fillSiteForm() {
   document.getElementById('s-badge3').value = (site.badges || [])[2] || '';
   document.getElementById('s-hero').value = site.heroImage || '';
   document.getElementById('s-samples').value = site.freeSamplesLink || '';
-  document.getElementById('s-disclaimer').value = site.disclaimer || '';
-  document.getElementById('s-howitworks').value = site.howItWorks || '';
-  document.getElementById('s-order-text').value = (site.order || {}).text || '';
-  document.getElementById('s-order-link').value = (site.order || {}).link || '';
+  document.getElementById('s-order-link').value = site.orderLink || '';
 }
 
 async function saveSiteJson(successMsg) {
@@ -152,12 +149,7 @@ document.getElementById('save-site').addEventListener('click', () => {
   site.badges = [document.getElementById('s-badge1').value.trim(), document.getElementById('s-badge2').value.trim(), document.getElementById('s-badge3').value.trim()].filter(Boolean);
   site.heroImage = document.getElementById('s-hero').value.trim();
   site.freeSamplesLink = document.getElementById('s-samples').value.trim();
-  site.disclaimer = document.getElementById('s-disclaimer').value.trim();
-  site.howItWorks = document.getElementById('s-howitworks').value.trim();
-  site.order = {
-    text: document.getElementById('s-order-text').value.trim(),
-    link: document.getElementById('s-order-link').value.trim(),
-  };
+  site.orderLink = document.getElementById('s-order-link').value.trim();
   saveSiteJson('Portada guardada');
 });
 
