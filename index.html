@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo de Packs IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-banner-wrap">
+    <img id="hero-banner-img" class="hero-banner-img hidden" src="" alt="Portada">
+  </div>
+  <div class="wrap hero-inner">
+    <div class="avatar-wrap">
+      <img id="avatar-img" class="avatar-img hidden" src="" alt="Avatar">
+      <div class="avatar-placeholder" id="avatar-placeholder">🎨</div>
+      <span class="avatar-badge" id="seal-text">Est. 2024</span>
+    </div>
+    <div class="hero-text">
+      <p class="brand" id="brand-name">Tu Marca</p>
+      <h1 id="site-title">AI Image Packs</h1>
+      <p class="tagline" id="tagline">Cargando…</p>
+      <div class="badges" id="badges"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="topnav wrap">
+  <a class="nav-link active" href="index.html" id="nav-home">Inicio</a>
+  <a class="nav-link" href="#grid" id="nav-packs">Packs</a>
+  <a class="nav-link" id="nav-samples" href="#">Muestras Gratis</a>
+  <a class="nav-link" href="#categorias" id="nav-categories">Grupos Idol</a>
+  <a class="nav-link" id="nav-contact" href="contacto.html">Contacto</a>
+  <input class="search" id="search" type="text" placeholder="Buscar packs...">
+  <div class="lang-switch" id="lang-switch"></div>
+</nav>
+
+<div class="wrap">
+  <div class="layout">
+    <aside>
+      <div class="panel-card" id="categorias">
+        <h2 id="categorias-title">🎤 Grupos Idol</h2>
+        <ul class="cat-list" id="cat-list"></ul>
+      </div>
+
+      <div class="panel-card" style="margin-top:20px;">
+        <h2 id="tags-title">🏷️ Tags</h2>
+        <div class="tag-cloud" id="tag-cloud"></div>
+        <a href="tags.html" id="ver-todos-tags" class="see-all-link">Ver todos los tags →</a>
+      </div>
+
+      <div class="panel-card" style="margin-top:20px;">
+        <h2 id="price-filter-title">💴 Filtrar por precio</h2>
+        <div class="price-range-row">
+          <div class="price-field">
+            <label id="price-min-label">Mín</label>
+            <input type="number" id="price-min" min="0" placeholder="¥0">
+          </div>
+          <div class="price-field">
+            <label id="price-max-label">Máx</label>
+            <input type="number" id="price-max" min="0" placeholder="¥9999">
+          </div>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:10px;">
+          <button class="btn-outline" id="price-apply-btn" type="button">Aplicar</button>
+          <button class="btn-outline" id="price-clear-btn" type="button">Quitar filtro</button>
+        </div>
+      </div>
+
+      <div class="panel-card info-box" id="disclaimer-box" style="margin-top:20px;"></div>
+    </aside>
+
+    <main>
+      <div class="grid-header">
+        <h2 class="section-title" id="grid-title" style="margin:0;">✨ Packs</h2>
+        <div class="sort-control">
+          <label id="sort-label" for="sort-select">Ordenar:</label>
+          <select id="sort-select">
+            <option value="newest">Más nuevos primero</option>
+            <option value="oldest">Más antiguos primero</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid" id="grid-content"><p class="empty">Cargando catálogo…</p></div>
+    </main>
+  </div>
+
+  <div class="panel-card" id="como-funciona-panel" style="margin-top:10px;">
+    <h2 id="como-funciona-title">💫 Cómo Funciona</h2>
+    <p id="como-funciona-text" style="color:var(--text-muted); font-size:0.92rem;"></p>
+  </div>
+
+  <div class="info-grid">
+    <div class="panel-card">
+      <h2 id="muestras-title">🎁 Muestras Gratis</h2>
+      <p id="muestras-desc">Descargá imágenes de muestra y probá la calidad de mis packs antes de comprar.</p>
+      <a class="cta-btn" id="samples-btn" href="#">Ver muestras</a>
+    </div>
+    <div class="panel-card">
+      <h2 id="pedidos-title">📦 Hacer un Pedido</h2>
+      <p id="pedidos-desc"></p>
+      <a class="cta-btn" id="pedidos-btn" href="#">Hacer pedido</a>
+    </div>
+    <div class="panel-card" id="contacto">
+      <h2 id="duda-title">💌 ¿Tenés alguna duda?</h2>
+      <p id="contact-text">Encontrame en mis redes o escribime directamente.</p>
+      <a class="cta-btn" id="contact-btn" href="contacto.html">Contactar</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span id="footer-brand">© 2024 Tu Marca — Hecho con amor para fans</span>
+    <span id="footer-social"></span>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/home.js"></script>
+</body>
+</html>
