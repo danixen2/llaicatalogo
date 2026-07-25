@@ -24,6 +24,9 @@ const I18N = {
     tags_page_title: 'Todos los tags', tags_search_placeholder: 'Buscar tag...',
     price_filter_title: 'Filtrar por precio', price_min: 'Mín', price_max: 'Máx', price_apply: 'Aplicar',
     price_clear: 'Quitar filtro',
+    pedidos_title: '📦 Hacer un Pedido', pedido_btn: 'Hacer pedido',
+    duda_desc_generic: 'Encontrame en mis redes o escribime directamente.',
+    contacto_page_title: 'Dónde encontrarme', no_contacts_msg: 'Todavía no cargué mis contactos.',
   },
   en: {
     nav_home: 'Home', nav_packs: 'Packs', nav_samples: 'Free Samples',
@@ -50,6 +53,9 @@ const I18N = {
     tags_page_title: 'All tags', tags_search_placeholder: 'Search tag...',
     price_filter_title: 'Filter by price', price_min: 'Min', price_max: 'Max', price_apply: 'Apply',
     price_clear: 'Clear filter',
+    pedidos_title: '📦 Place an Order', pedido_btn: 'Place order',
+    duda_desc_generic: 'Find me on my socials or write to me directly.',
+    contacto_page_title: 'Where to find me', no_contacts_msg: "I haven't added my contacts yet.",
   },
   ja: {
     nav_home: 'ホーム', nav_packs: 'パック', nav_samples: '無料サンプル',
@@ -76,6 +82,9 @@ const I18N = {
     tags_page_title: 'すべてのタグ', tags_search_placeholder: 'タグを検索...',
     price_filter_title: '価格で絞り込む', price_min: '最小', price_max: '最大', price_apply: '適用',
     price_clear: 'フィルターを解除',
+    pedidos_title: '📦 注文する', pedido_btn: '注文する',
+    duda_desc_generic: 'SNSで見つけるか、直接メッセージしてください。',
+    contacto_page_title: '連絡先', no_contacts_msg: 'まだ連絡先を追加していません。',
   },
 };
 
