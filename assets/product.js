@@ -47,7 +47,7 @@ async function init() {
         <h1>${escapeHtml(name)}</h1>
         <div class="pub-date-standalone">${escapeHtml(formatDate(product.publishedAt, lang))}</div>
         <div class="tags">${(product.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
-        <p class="desc" style="margin-top:16px;">${escapeHtml(description)}</p>
+        <div class="desc" style="margin-top:16px;">${sanitizeRichHtml(plainToEditableHtml(description))}</div>
         <div class="actions">
           ${product.sampleLink ? `<a class="btn-lg ghost" href="${escapeHtml(product.sampleLink)}" target="_blank" rel="noopener">${t('ver_muestra_gratis_btn', lang)}</a>` : ''}
           ${product.purchaseLink ? `<a class="btn-lg primary" href="${escapeHtml(product.purchaseLink)}" target="_blank" rel="noopener">${t('comprar_btn', lang)} · ${escapeHtml(formatYen(product.price))}</a>` : ''}
