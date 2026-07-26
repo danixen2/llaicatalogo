@@ -552,7 +552,10 @@ footer.site-footer a { text-decoration: none; opacity: 0.9; margin-left: 10px; }
 
 .product-detail h1 { font-size: 1.9rem; margin: 6px 0 10px; color: var(--purple-dark); }
 
-.product-detail .desc { color: var(--text); font-size: 0.98rem; margin-bottom: 18px; }
+.product-detail .desc { color: var(--text); font-size: 0.98rem; margin-bottom: 18px; line-height: 1.65; }
+.product-detail .desc ul, .product-detail .desc ol { padding-left: 22px; margin: 8px 0; }
+.product-detail .desc li { margin-bottom: 4px; }
+.product-detail .desc p, .product-detail .desc div { margin: 0 0 10px; }
 
 .product-detail .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
 
