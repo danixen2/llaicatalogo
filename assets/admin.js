@@ -311,7 +311,7 @@ function renderProductList(filterText) {
         <div class="field"><label>Fecha de publicación</label><input data-i="${i}" data-f="publishedAt" type="date" value="${escapeAttr(p.publishedAt)}"></div>
         <div class="field"><label>Precio (¥ yenes)</label><input data-i="${i}" data-f="price" type="number" min="0" value="${p.price ?? 0}"></div>
       </div>
-      <div class="field"><label>Descripción (Español)</label><textarea data-i="${i}" data-f="description">${escapeHtml(p.description || '')}</textarea></div>
+      ${rteFieldHtml('Descripción (Español)', i, 'description', p.description)}
       <div class="field"><label>Tags (separados por coma, sin traducción)</label><input data-i="${i}" data-f="tags" value="${escapeAttr((p.tags || []).join(', '))}"></div>
       <div class="row2">
         <div class="field"><label>Link de compra</label><input data-i="${i}" data-f="purchaseLink" value="${escapeAttr(p.purchaseLink)}"></div>
@@ -320,9 +320,9 @@ function renderProductList(filterText) {
       <details style="margin-top:8px;">
         <summary style="cursor:pointer; font-size:0.82rem; color:var(--purple-dark); font-weight:700;">🌍 Traducciones (English / 日本語)</summary>
         <div class="field" style="margin-top:10px;"><label>Título (English)</label><input data-i="${i}" data-f="name_en" value="${escapeAttr(p.name_en)}"></div>
-        <div class="field"><label>Descripción (English)</label><textarea data-i="${i}" data-f="description_en">${escapeHtml(p.description_en || '')}</textarea></div>
+        ${rteFieldHtml('Descripción (English)', i, 'description_en', p.description_en)}
         <div class="field"><label>Título (日本語)</label><input data-i="${i}" data-f="name_ja" value="${escapeAttr(p.name_ja)}"></div>
-        <div class="field"><label>Descripción (日本語)</label><textarea data-i="${i}" data-f="description_ja">${escapeHtml(p.description_ja || '')}</textarea></div>
+        ${rteFieldHtml('Descripción (日本語)', i, 'description_ja', p.description_ja)}
       </details>
     </details>
   `;
@@ -332,7 +332,8 @@ function renderProductList(filterText) {
     el.addEventListener('input', (e) => {
       const i = parseInt(e.target.dataset.i, 10);
       const f = e.target.dataset.f;
-      if (f === 'tags') products[i][f] = e.target.value.split(',').map(t => t.trim()).filter(Boolean);
+      if (e.target.classList.contains('rte-editor')) products[i][f] = sanitizeRichHtml(e.target.innerHTML);
+      else if (f === 'tags') products[i][f] = e.target.value.split(',').map(t => t.trim()).filter(Boolean);
       else if (f === 'price') products[i][f] = e.target.value !== '' ? Number(e.target.value) : 0;
       else products[i][f] = e.target.value;
     });
@@ -359,18 +360,19 @@ document.getElementById('add-form').addEventListener('submit', (e) => {
     name: document.getElementById('new-name').value.trim(),
     category: document.getElementById('new-category').value,
     image: document.getElementById('new-image').value.trim(),
-    description: document.getElementById('new-desc').value.trim(),
+    description: sanitizeRichHtml(document.getElementById('new-desc').innerHTML),
     tags: document.getElementById('new-tags').value.split(',').map(t => t.trim()).filter(Boolean),
     purchaseLink: document.getElementById('new-purchase').value.trim(),
     sampleLink: document.getElementById('new-sample').value.trim(),
     name_en: document.getElementById('new-name-en').value.trim(),
-    description_en: document.getElementById('new-desc-en').value.trim(),
+    description_en: sanitizeRichHtml(document.getElementById('new-desc-en').innerHTML),
     name_ja: document.getElementById('new-name-ja').value.trim(),
-    description_ja: document.getElementById('new-desc-ja').value.trim(),
+    description_ja: sanitizeRichHtml(document.getElementById('new-desc-ja').innerHTML),
     publishedAt: document.getElementById('new-published').value || new Date().toISOString().slice(0, 10),
     price: document.getElementById('new-price').value !== '' ? Number(document.getElementById('new-price').value) : 0,
   });
   e.target.reset();
+  ['new-desc', 'new-desc-en', 'new-desc-ja'].forEach(id => { document.getElementById(id).innerHTML = ''; });
   renderProductList(document.getElementById('product-search').value);
 });
 
