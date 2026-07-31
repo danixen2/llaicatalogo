@@ -25,6 +25,11 @@
       "id": "fantasia",
       "label": "Fantasía",
       "icon": "🔮"
+    },
+    {
+      "id": "nijigasaki",
+      "label": "Nijigasaki Idol Club",
+      "icon": "⭐"
     }
   ],
   "freeSamplesLink": "https://www.pixiv.net/en/users/120534185",
