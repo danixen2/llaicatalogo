@@ -33,8 +33,8 @@
   },
   {
     "id": "pack-002",
-    "name": "Retratos Clásicos",
-    "category": "realista",
+    "name": "Ayase Eli (Playfun Bunny) 917 Imagenes + 23 Animaciones",
+    "category": "muse",
     "tags": [
       "estudio",
       "retrato",
@@ -45,7 +45,8 @@
     "purchaseLink": "https://tu-tienda.com/pack-retratos-clasicos",
     "sampleLink": "https://tu-tienda.com/muestras/pack-retratos-clasicos",
     "featured": true,
-    "publishedAt": "2026-06-15"
+    "publishedAt": "2026-05-30",
+    "price": 1500
   },
   {
     "id": "pack-003",
