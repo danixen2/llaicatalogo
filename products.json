@@ -71,19 +71,20 @@
   },
   {
     "id": "pack-003",
-    "name": "Reinos Perdidos",
+    "name": "Hinoshita Kaho & Otomune Kozue (Threesome Pack) Pack Limitado",
     "category": "fantasia",
     "tags": [
       "épico",
       "paisajes",
       "30 imágenes"
     ],
-    "image": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?q=80&w=900&auto=format&fit=crop",
+    "image": "https://iili.io/CrsIXWB.jpg",
     "description": "30 escenas de fantasía épica: castillos, criaturas y paisajes imposibles en estilo de pintura digital. Perfecto para portadas de historias y ambientación.",
     "purchaseLink": "https://tu-tienda.com/pack-reinos-perdidos",
     "sampleLink": "https://tu-tienda.com/muestras/pack-reinos-perdidos",
     "featured": true,
-    "publishedAt": "2026-05-20"
+    "publishedAt": "2026-05-23",
+    "price": 5000
   },
   {
     "id": "pack-1784764615017",
