@@ -13,7 +13,12 @@
 <header class="hero" style="border-radius:0 0 24px 24px; padding-bottom:16px;">
   <div class="wrap hero-inner" style="gap:16px; padding-top:20px; justify-content:space-between;">
     <p class="brand" id="brand-name" style="margin:0;">Tu Marca</p>
-    <div class="lang-switch" id="lang-switch"></div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a class="nav-link cart-nav-btn" id="nav-cart-link" href="carrito.html" style="background:#fff; box-shadow:var(--shadow);">
+        🛒<span class="cart-badge hidden" id="cart-badge">0</span>
+      </a>
+      <div class="lang-switch" id="lang-switch"></div>
+    </div>
   </div>
 </header>
 
@@ -34,6 +39,7 @@
 
 <script src="assets/i18n.js"></script>
 <script src="assets/rte.js"></script>
+<script src="assets/cart.js"></script>
 <script src="assets/product.js"></script>
 </body>
 </html>
