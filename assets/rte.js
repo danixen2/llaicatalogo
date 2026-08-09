@@ -1,6 +1,4 @@
 // ---------- Sanitizador de HTML enriquecido ----------
-// Solo permite formato básico de texto: negrita, cursiva, subrayado, tachado,
-// listas, párrafos/saltos de línea y alineación. Nada de scripts, links, imágenes ni estilos raros.
 const RTE_ALLOWED_TAGS = new Set(['B', 'STRONG', 'I', 'EM', 'U', 'S', 'STRIKE', 'UL', 'OL', 'LI', 'BR', 'DIV', 'P', 'SPAN']);
 
 function rteCleanChildren(node) {
@@ -19,7 +17,7 @@ function rteCleanChildren(node) {
         newEl.appendChild(cleanedChildren);
         frag.appendChild(newEl);
       } else {
-        frag.appendChild(cleanedChildren); // tag no permitido: se descarta pero se conserva el contenido
+        frag.appendChild(cleanedChildren);
       }
     }
   });
@@ -36,21 +34,28 @@ function sanitizeRichHtml(html) {
   return out.innerHTML;
 }
 
-// Texto plano viejo (de antes de este editor) -> HTML editable, respetando saltos de línea.
 function plainToEditableHtml(text) {
   if (!text) return '';
-  if (/<[a-z][\s\S]*>/i.test(text)) return text; // ya viene con formato
+  if (/<[a-z][\s\S]*>/i.test(text)) return text;
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML.replace(/\n/g, '<br>');
 }
 
-// ---------- Barra de herramientas ----------
-// Delegación de eventos: funciona incluso con editores agregados dinámicamente después.
+// Convierte el HTML enriquecido a texto plano legible (para el PDF, que no soporta HTML).
+function richHtmlToPlainText(html) {
+  if (!html) return '';
+  const container = document.createElement('div');
+  container.innerHTML = html;
+  container.querySelectorAll('li').forEach(li => { li.textContent = '• ' + li.textContent; });
+  container.querySelectorAll('p, div, li, br').forEach(el => { el.insertAdjacentText('afterend', '\n'); });
+  return (container.textContent || '').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 document.addEventListener('mousedown', (e) => {
   const btn = e.target.closest('[data-rte-cmd]');
   if (!btn) return;
-  e.preventDefault(); // no perder la selección de texto al hacer clic en el botón
+  e.preventDefault();
   const field = btn.closest('.rte-field');
   const editor = field && field.querySelector('.rte-editor');
   if (!editor) return;
@@ -78,7 +83,6 @@ function rteToolbarHtml() {
   `;
 }
 
-// Genera el bloque completo: label + toolbar + editor. initialValue puede ser texto plano viejo o HTML.
 function rteFieldHtml(label, dataI, dataF, initialValue) {
   return `
     <div class="rte-field">
