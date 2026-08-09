@@ -47,7 +47,7 @@ document.getElementById('cfg-form').addEventListener('submit', async (e) => {
     const res = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}`, { headers: ghHeaders() });
 
     if (res.status === 401) throw new Error('Token inválido o expirado. Generá uno nuevo.');
-    if (res.status === 404) throw new Error('No se encontró el repositorio, o el token no tiene acceso a él. Revisá el nombre exacto (mayúsculas incluidas) y que el token tenga ese repo seleccionado.');
+    if (res.status === 404) throw new Error('No se encontró el repositorio, o el token no tiene acceso a él.');
     if (!res.ok) throw new Error(`GitHub respondió con error ${res.status}.`);
 
     const data = await res.json();
@@ -109,15 +109,16 @@ async function loadSite() {
 function fillSiteForm() {
   document.getElementById('s-brand').value = site.brandName || '';
   document.getElementById('s-title').value = site.siteTitle || '';
+  document.getElementById('s-avatar').value = site.avatarImage || '';
   document.getElementById('s-tagline').value = site.tagline || '';
   document.getElementById('s-seal').value = site.sealText || '';
-  document.getElementById('s-avatar').value = site.avatarImage || '';
   document.getElementById('s-badge1').value = (site.badges || [])[0] || '';
   document.getElementById('s-badge2').value = (site.badges || [])[1] || '';
   document.getElementById('s-badge3').value = (site.badges || [])[2] || '';
   document.getElementById('s-hero').value = site.heroImage || '';
   document.getElementById('s-samples').value = site.freeSamplesLink || '';
   document.getElementById('s-order-link').value = site.orderLink || '';
+  document.getElementById('s-receipt-discord').value = site.receiptDiscordLink || '';
 }
 
 async function saveSiteJson(successMsg) {
@@ -143,55 +144,18 @@ async function saveSiteJson(successMsg) {
 document.getElementById('save-site').addEventListener('click', () => {
   site.brandName = document.getElementById('s-brand').value.trim();
   site.siteTitle = document.getElementById('s-title').value.trim();
+  site.avatarImage = document.getElementById('s-avatar').value.trim();
   site.tagline = document.getElementById('s-tagline').value.trim();
   site.sealText = document.getElementById('s-seal').value.trim();
-  site.avatarImage = document.getElementById('s-avatar').value.trim();
   site.badges = [document.getElementById('s-badge1').value.trim(), document.getElementById('s-badge2').value.trim(), document.getElementById('s-badge3').value.trim()].filter(Boolean);
   site.heroImage = document.getElementById('s-hero').value.trim();
   site.freeSamplesLink = document.getElementById('s-samples').value.trim();
   site.orderLink = document.getElementById('s-order-link').value.trim();
+  site.receiptDiscordLink = document.getElementById('s-receipt-discord').value.trim();
   saveSiteJson('Portada guardada');
 });
 
-// ---------- Contact links (linktree-style) ----------
-
-function renderContactRows() {
-  site.contactLinks = site.contactLinks || [];
-  const wrap = document.getElementById('contact-rows');
-  wrap.innerHTML = site.contactLinks.map((c, i) => `
-    <div class="cat-editor-row" style="grid-template-columns: 1fr 1fr 1fr 40px;">
-      <input data-i="${i}" data-f="label" value="${escapeAttr(c.label)}" placeholder="Ej: Discord">
-      <input data-i="${i}" data-f="icon" value="${escapeAttr(c.icon)}" placeholder="URL ícono circular">
-      <input data-i="${i}" data-f="link" value="${escapeAttr(c.link)}" placeholder="https://...">
-      <button class="btn-danger" data-del="${i}" type="button">✕</button>
-    </div>
-  `).join('');
-
-  wrap.querySelectorAll('input').forEach(inp => {
-    inp.addEventListener('input', (e) => {
-      const i = parseInt(e.target.dataset.i, 10);
-      site.contactLinks[i][e.target.dataset.f] = e.target.value;
-    });
-  });
-  wrap.querySelectorAll('[data-del]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      site.contactLinks.splice(parseInt(btn.dataset.del, 10), 1);
-      renderContactRows();
-    });
-  });
-}
-
-document.getElementById('add-contact').addEventListener('click', () => {
-  site.contactLinks = site.contactLinks || [];
-  site.contactLinks.push({ id: 'c-' + Date.now(), label: '', icon: '', link: '' });
-  renderContactRows();
-});
-
-document.getElementById('save-contact').addEventListener('click', () => {
-  saveSiteJson('Contacto guardado');
-});
-
-// ---------- Categories ----------
+// ---------- Categories (Grupos Idol) ----------
 
 function renderCategoryRows() {
   const wrap = document.getElementById('cat-rows');
@@ -228,7 +192,7 @@ document.getElementById('add-cat').addEventListener('click', () => {
 });
 
 document.getElementById('save-cats').addEventListener('click', () => {
-  saveSiteJson('Categorías guardadas');
+  saveSiteJson('Grupos guardados');
   populateCategorySelect();
 });
 
@@ -236,6 +200,44 @@ function populateCategorySelect() {
   const sel = document.getElementById('new-category');
   sel.innerHTML = (site.categories || []).map(c => `<option value="${escapeAttr(c.id)}">${escapeHtml(c.label)}</option>`).join('');
 }
+
+// ---------- Contact links ----------
+
+function renderContactRows() {
+  site.contactLinks = site.contactLinks || [];
+  const wrap = document.getElementById('contact-rows');
+  wrap.innerHTML = site.contactLinks.map((c, i) => `
+    <div class="cat-editor-row" style="grid-template-columns: 1fr 1fr 1fr 40px;">
+      <input data-i="${i}" data-f="label" value="${escapeAttr(c.label)}" placeholder="Ej: Discord">
+      <input data-i="${i}" data-f="icon" value="${escapeAttr(c.icon)}" placeholder="URL ícono circular">
+      <input data-i="${i}" data-f="link" value="${escapeAttr(c.link)}" placeholder="https://...">
+      <button class="btn-danger" data-del="${i}" type="button">✕</button>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      const i = parseInt(e.target.dataset.i, 10);
+      site.contactLinks[i][e.target.dataset.f] = e.target.value;
+    });
+  });
+  wrap.querySelectorAll('[data-del]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      site.contactLinks.splice(parseInt(btn.dataset.del, 10), 1);
+      renderContactRows();
+    });
+  });
+}
+
+document.getElementById('add-contact').addEventListener('click', () => {
+  site.contactLinks = site.contactLinks || [];
+  site.contactLinks.push({ id: 'c-' + Date.now(), label: '', icon: '', link: '' });
+  renderContactRows();
+});
+
+document.getElementById('save-contact').addEventListener('click', () => {
+  saveSiteJson('Contacto guardado');
+});
 
 // ---------- Products ----------
 
@@ -279,13 +281,9 @@ function renderProductList(filterText) {
     container.innerHTML = '<p style="color:var(--text-muted); font-size:0.88rem;">Todavía no agregaste ningún pack.</p>';
     return;
   }
-  const catMap = {};
-  (site.categories || []).forEach(c => catMap[c.id] = c.label);
 
   const q = (filterText || '').toLowerCase().trim();
-  const indexes = products
-    .map((p, i) => i)
-    .filter(i => !q || (products[i].name || '').toLowerCase().includes(q));
+  const indexes = products.map((p, i) => i).filter(i => !q || (products[i].name || '').toLowerCase().includes(q));
 
   if (indexes.length === 0) {
     container.innerHTML = '<p style="color:var(--text-muted); font-size:0.88rem;">No hay packs que coincidan con esa búsqueda.</p>';
@@ -337,7 +335,6 @@ function renderProductList(filterText) {
       else if (f === 'price') products[i][f] = e.target.value !== '' ? Number(e.target.value) : 0;
       else products[i][f] = e.target.value;
     });
-    // Evita que escribir en un campo abra/cierre el <details> padre.
     el.addEventListener('click', (e) => e.stopPropagation());
   });
   container.querySelectorAll('[data-del]').forEach(btn => {
@@ -381,7 +378,7 @@ document.getElementById('product-search').addEventListener('input', (e) => {
 });
 
 document.getElementById('save-products').addEventListener('click', saveProducts);
-document.getElementById('reload-products').addEventListener('click', loadProducts);
+document.getElementById('reload-products').addEventListener('click', () => loadProducts());
 
 // ---------- Init ----------
 
