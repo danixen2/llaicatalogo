@@ -12,6 +12,7 @@ async function init() {
 
   document.getElementById('back-link').textContent = t('back_link', lang);
   document.getElementById('loading-msg').textContent = t('loading_msg', lang);
+  updateCartBadge();
 
   const [siteRes, prodRes] = await Promise.all([
     fetch('site.json?t=' + Date.now()),
@@ -22,6 +23,7 @@ async function init() {
 
   document.getElementById('brand-name').textContent = site.brandName || '';
   document.getElementById('footer-brand').textContent = '© ' + new Date().getFullYear() + ' ' + (site.brandName || '');
+  document.getElementById('nav-cart-link').href = 'carrito.html?lang=' + lang;
 
   const product = products.find(p => p.id === id);
   const content = document.getElementById('content');
@@ -37,7 +39,7 @@ async function init() {
   document.title = name + ' — ' + (site.brandName || '');
 
   const catMap = {};
-  (site.categories || []).forEach(c => catMap[c.id] = c.label); // categoría sin traducir
+  (site.categories || []).forEach(c => catMap[c.id] = c.label);
 
   content.innerHTML = `
     <div class="product-detail">
@@ -51,10 +53,18 @@ async function init() {
         <div class="actions">
           ${product.sampleLink ? `<a class="btn-lg ghost" href="${escapeHtml(product.sampleLink)}" target="_blank" rel="noopener">${t('ver_muestra_gratis_btn', lang)}</a>` : ''}
           ${product.purchaseLink ? `<a class="btn-lg primary" href="${escapeHtml(product.purchaseLink)}" target="_blank" rel="noopener">${t('comprar_btn', lang)} · ${escapeHtml(formatYen(product.price))}</a>` : ''}
+          <button type="button" class="btn-lg ghost" id="add-cart-detail">🛒 ${t('add_to_cart', lang)}</button>
         </div>
       </div>
     </div>
   `;
+
+  document.getElementById('add-cart-detail').addEventListener('click', (e) => {
+    addToCart(product.id, 'base');
+    updateCartBadge();
+    e.target.textContent = '✓ ' + t('added_to_cart', lang);
+    setTimeout(() => { e.target.textContent = '🛒 ' + t('add_to_cart', lang); }, 1400);
+  });
 
   const related = products.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3);
   if (related.length) {
