@@ -21,6 +21,7 @@ async function init() {
   });
 
   renderAll();
+  updateCartBadge();
 
   document.getElementById('search').addEventListener('input', (e) => {
     state.query = e.target.value.toLowerCase().trim();
@@ -64,6 +65,7 @@ function applyStaticText() {
   document.getElementById('nav-samples').textContent = '🌟 ' + t('nav_samples', L);
   document.getElementById('nav-categories').textContent = '🎤 ' + t('nav_categories', L);
   document.getElementById('nav-contact').textContent = '✉️ ' + t('nav_contact', L);
+  document.getElementById('nav-cart-label').textContent = '🛒 ' + t('nav_cart', L);
   document.getElementById('search').placeholder = t('search_placeholder', L);
   document.getElementById('categorias-title').textContent = '🎤 ' + t('categorias_title', L);
   document.getElementById('tags-title').textContent = '🏷️ ' + t('tags_title', L);
@@ -79,6 +81,7 @@ function applyStaticText() {
   document.getElementById('muestras-desc').textContent = t('muestras_desc', L);
   document.getElementById('samples-btn').textContent = t('ver_muestras_btn', L);
   document.getElementById('como-funciona-title').textContent = '💫 ' + t('como_funciona_title', L);
+  document.getElementById('como-funciona-text').textContent = t('how_it_works_text', L);
   document.getElementById('duda-title').textContent = '💌 ' + t('duda_title', L);
   document.getElementById('contact-text').textContent = t('duda_desc_generic', L);
   document.getElementById('contact-btn').textContent = t('contactar_btn', L);
@@ -127,16 +130,15 @@ function applySiteSettings() {
     document.getElementById('nav-samples').href = s.freeSamplesLink;
   }
 
-  document.getElementById('como-funciona-text').textContent = t('how_it_works_text', L);
-
-  document.getElementById('pedidos-desc').textContent = t('order_text', L);
   const pedidosBtn = document.getElementById('pedidos-btn');
+  document.getElementById('pedidos-desc').textContent = t('order_text', L);
   if (s.orderLink) { pedidosBtn.href = s.orderLink; pedidosBtn.style.display = ''; }
   else { pedidosBtn.style.display = 'none'; }
 
   const langParam = '?lang=' + L;
   document.getElementById('contact-btn').href = 'contacto.html' + langParam;
   document.getElementById('nav-contact').href = 'contacto.html' + langParam;
+  document.getElementById('nav-cart').href = 'carrito.html' + langParam;
 }
 
 function renderCategories() {
@@ -144,7 +146,6 @@ function renderCategories() {
   const counts = {};
   state.products.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
 
-  // Nota: el nombre del grupo idol (cat.label) NUNCA se traduce, se muestra tal cual lo escribiste.
   let html = `<li><button class="${state.activeCat === 'all' ? 'active' : ''}" data-cat="all">${t('todos', state.lang)} <span class="count">${state.products.length}</span></button></li>`;
   (state.site.categories || []).forEach(cat => {
     html += `<li><button class="${state.activeCat === cat.id ? 'active' : ''}" data-cat="${cat.id}">${cat.icon || ''} ${escapeHtml(cat.label)} <span class="count">${counts[cat.id] || 0}</span></button></li>`;
@@ -217,25 +218,43 @@ function renderGrid() {
   }
 
   const catMap = {};
-  (state.site.categories || []).forEach(c => catMap[c.id] = c.label); // etiqueta de grupo idol: sin traducir
+  (state.site.categories || []).forEach(c => catMap[c.id] = c.label);
 
   grid.innerHTML = visible.map(p => `
-    <a class="card" href="producto.html?id=${encodeURIComponent(p.id)}&lang=${state.lang}">
-      <div class="thumb-wrap">
-        <img class="thumb" src="${escapeHtml(p.image || '')}" alt="${escapeHtml(localizedField(p, 'name', state.lang))}" loading="lazy">
-        <span class="cat-badge">${escapeHtml(catMap[p.category] || p.category || '')}</span>
-      </div>
+    <div class="card">
+      <a href="producto.html?id=${encodeURIComponent(p.id)}&lang=${state.lang}" style="text-decoration:none; color:inherit;">
+        <div class="thumb-wrap">
+          <img class="thumb" src="${escapeHtml(p.image || '')}" alt="${escapeHtml(localizedField(p, 'name', state.lang))}" loading="lazy">
+          <span class="cat-badge">${escapeHtml(catMap[p.category] || p.category || '')}</span>
+        </div>
+      </a>
       <div class="body">
-        <h3>${escapeHtml(localizedField(p, 'name', state.lang))}</h3>
+        <a href="producto.html?id=${encodeURIComponent(p.id)}&lang=${state.lang}" style="text-decoration:none; color:inherit;">
+          <h3>${escapeHtml(localizedField(p, 'name', state.lang))}</h3>
+        </a>
         <div class="tags">${(p.tags || []).slice(0, 3).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>
         <div class="meta-row">
           <span class="pub-date">${escapeHtml(formatDate(p.publishedAt, state.lang))}</span>
           <span class="price-tag">${escapeHtml(formatYen(p.price))}</span>
         </div>
-        <span class="more-btn">${t('ver_mas', state.lang)}</span>
+        <a class="more-btn" href="producto.html?id=${encodeURIComponent(p.id)}&lang=${state.lang}" style="text-decoration:none;">${t('ver_mas', state.lang)}</a>
+        <button type="button" class="cart-add-btn" data-add-id="${escapeAttr(p.id)}">🛒 ${t('add_to_cart', state.lang)}</button>
       </div>
-    </a>
+    </div>
   `).join('');
+
+  grid.querySelectorAll('[data-add-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      addToCart(btn.dataset.addId, 'base');
+      updateCartBadge();
+      btn.textContent = '✓ ' + t('added_to_cart', state.lang);
+      btn.classList.add('added');
+      setTimeout(() => {
+        btn.textContent = '🛒 ' + t('add_to_cart', state.lang);
+        btn.classList.remove('added');
+      }, 1400);
+    });
+  });
 }
 
 function escapeHtml(str) {
