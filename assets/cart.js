@@ -17,7 +17,7 @@ function addToCart(productId, version) {
   const items = getCart();
   const exists = items.some(it => it.productId === productId && it.version === version);
   if (!exists) {
-    items.push({ productId, version: version || 'base' });
+    items.push({ productId, version: version || 'base', selected: true });
     saveCart(items);
   }
   return items;
@@ -33,6 +33,15 @@ function setCartItemVersion(productId, oldVersion, newVersion) {
   const items = getCart();
   const item = items.find(it => it.productId === productId && it.version === oldVersion);
   if (item) item.version = newVersion;
+  saveCart(items);
+  return items;
+}
+
+// Marca o desmarca un producto sin sacarlo de la lista (para "probar" combinaciones sin perder el pack).
+function setCartItemSelected(productId, version, selected) {
+  const items = getCart();
+  const item = items.find(it => it.productId === productId && it.version === version);
+  if (item) item.selected = selected;
   saveCart(items);
   return items;
 }
