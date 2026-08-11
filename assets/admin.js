@@ -119,6 +119,8 @@ function fillSiteForm() {
   document.getElementById('s-samples').value = site.freeSamplesLink || '';
   document.getElementById('s-order-link').value = site.orderLink || '';
   document.getElementById('s-receipt-discord').value = site.receiptDiscordLink || '';
+  document.getElementById('s-receipt-logo').value = site.receiptLogoStyle || 'none';
+  document.getElementById('s-receipt-banner').value = site.receiptBannerStyle || 'none';
 }
 
 async function saveSiteJson(successMsg) {
@@ -152,6 +154,8 @@ document.getElementById('save-site').addEventListener('click', () => {
   site.freeSamplesLink = document.getElementById('s-samples').value.trim();
   site.orderLink = document.getElementById('s-order-link').value.trim();
   site.receiptDiscordLink = document.getElementById('s-receipt-discord').value.trim();
+  site.receiptLogoStyle = document.getElementById('s-receipt-logo').value;
+  site.receiptBannerStyle = document.getElementById('s-receipt-banner').value;
   saveSiteJson('Portada guardada');
 });
 
@@ -309,6 +313,11 @@ function renderProductList(filterText) {
         <div class="field"><label>Fecha de publicación</label><input data-i="${i}" data-f="publishedAt" type="date" value="${escapeAttr(p.publishedAt)}"></div>
         <div class="field"><label>Precio (¥ yenes)</label><input data-i="${i}" data-f="price" type="number" min="0" value="${p.price ?? 0}"></div>
       </div>
+      <div class="field">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+          <input type="checkbox" data-i="${i}" data-f="hasBoost" data-type="checkbox" ${p.hasBoost !== false ? 'checked' : ''} style="width:auto;"> Este pack tiene versión Boost (doble de precio)
+        </label>
+      </div>
       ${rteFieldHtml('Descripción (Español)', i, 'description', p.description)}
       <div class="field"><label>Tags (separados por coma, sin traducción)</label><input data-i="${i}" data-f="tags" value="${escapeAttr((p.tags || []).join(', '))}"></div>
       <div class="row2">
@@ -331,6 +340,7 @@ function renderProductList(filterText) {
       const i = parseInt(e.target.dataset.i, 10);
       const f = e.target.dataset.f;
       if (e.target.classList.contains('rte-editor')) products[i][f] = sanitizeRichHtml(e.target.innerHTML);
+      else if (e.target.dataset.type === 'checkbox') products[i][f] = e.target.checked;
       else if (f === 'tags') products[i][f] = e.target.value.split(',').map(t => t.trim()).filter(Boolean);
       else if (f === 'price') products[i][f] = e.target.value !== '' ? Number(e.target.value) : 0;
       else products[i][f] = e.target.value;
@@ -367,6 +377,7 @@ document.getElementById('add-form').addEventListener('submit', (e) => {
     description_ja: sanitizeRichHtml(document.getElementById('new-desc-ja').innerHTML),
     publishedAt: document.getElementById('new-published').value || new Date().toISOString().slice(0, 10),
     price: document.getElementById('new-price').value !== '' ? Number(document.getElementById('new-price').value) : 0,
+    hasBoost: document.getElementById('new-has-boost').checked,
   });
   e.target.reset();
   ['new-desc', 'new-desc-en', 'new-desc-ja'].forEach(id => { document.getElementById(id).innerHTML = ''; });
