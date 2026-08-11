@@ -31,7 +31,7 @@ const I18N = {
     cart_page_title: 'Tu selección', cart_empty: 'Todavía no agregaste ningún pack.',
     version_label: 'Versión', version_base: 'Pack Base', version_boost: 'Pack Boost',
     cart_total: 'Total', remove_item: 'Quitar', download_pdf_btn: '📄 Descargar PDF',
-    keep_browsing: 'Seguir viendo el catálogo',
+    keep_browsing: 'Seguir viendo el catálogo', include_in_total: 'Incluir en el total',
   },
   en: {
     nav_home: 'Home', nav_packs: 'Packs', nav_samples: 'Free Samples',
@@ -65,7 +65,7 @@ const I18N = {
     cart_page_title: 'Your selection', cart_empty: "You haven't added any packs yet.",
     version_label: 'Version', version_base: 'Base Pack', version_boost: 'Boost Pack',
     cart_total: 'Total', remove_item: 'Remove', download_pdf_btn: '📄 Download PDF',
-    keep_browsing: 'Keep browsing the catalog',
+    keep_browsing: 'Keep browsing the catalog', include_in_total: 'Include in total',
   },
   ja: {
     nav_home: 'ホーム', nav_packs: 'パック', nav_samples: '無料サンプル',
@@ -99,7 +99,7 @@ const I18N = {
     cart_page_title: '選択したパック', cart_empty: 'まだパックを追加していません。',
     version_label: 'バージョン', version_base: 'ベースパック', version_boost: 'ブーストパック',
     cart_total: '合計', remove_item: '削除', download_pdf_btn: '📄 PDFをダウンロード',
-    keep_browsing: 'カタログを見続ける',
+    keep_browsing: 'カタログを見続ける', include_in_total: '合計に含める',
   },
 };
 
