@@ -48,5 +48,7 @@
     }
   ],
   "orderLink": "https://discord.com/invite/H4wPT3Thcr",
-  "receiptDiscordLink": "https://discord.com/invite/H4wPT3Thcr"
+  "receiptDiscordLink": "https://discord.com/invite/H4wPT3Thcr",
+  "receiptLogoStyle": "color",
+  "receiptBannerStyle": "color"
 }
