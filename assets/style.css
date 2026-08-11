@@ -297,9 +297,13 @@ footer.site-footer a { text-decoration: none; opacity: 0.9; margin-left: 10px; }
 @media (max-width: 860px) { .cart-layout { grid-template-columns: 1fr; } }
 
 .cart-item {
-  display: grid; grid-template-columns: 84px 1fr auto; gap: 14px; align-items: center;
+  display: grid; grid-template-columns: auto 84px 1fr auto; gap: 14px; align-items: center;
   background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 14px; margin-bottom: 14px;
+  transition: opacity .15s ease;
 }
+.cart-item.deselected { opacity: 0.5; }
+.cart-item .select-toggle { display: flex; align-items: center; }
+.cart-item .select-toggle input { width: 20px; height: 20px; accent-color: var(--purple); cursor: pointer; }
 .cart-item img { width: 84px; height: 84px; object-fit: cover; border-radius: 12px; }
 .cart-item h3 { margin: 0 0 6px; font-size: 1rem; }
 .cart-item .version-select { display: flex; gap: 8px; margin-top: 6px; }
