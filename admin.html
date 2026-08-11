@@ -76,7 +76,25 @@
           <input id="s-receipt-discord" placeholder="https://discord.gg/...">
           <small class="help">Aparece al pie del PDF que descargan tus seguidores desde el carrito.</small>
         </div>
-        <small class="help" style="display:block; margin:-6px 0 14px;">El disclaimer, "Cómo Funciona" y el texto de pedidos ya vienen traducidos automáticamente en los 3 idiomas.</small>
+        <div class="row2">
+          <div class="field">
+            <label>Logo en el recibo (PDF)</label>
+            <select id="s-receipt-logo">
+              <option value="none">Sin logo</option>
+              <option value="color">Color</option>
+              <option value="grayscale">Blanco y negro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Banner en el recibo (PDF)</label>
+            <select id="s-receipt-banner">
+              <option value="none">Sin banner</option>
+              <option value="color">Color</option>
+              <option value="grayscale">Blanco y negro</option>
+            </select>
+          </div>
+        </div>
+        <small class="help" style="display:block; margin:-6px 0 14px;">Usan la misma imagen de avatar y de portada que configuraste arriba.</small>
         <button class="btn-solid" id="save-site">Guardar portada</button>
       </div>
     </div>
@@ -122,6 +140,11 @@
           <div class="field" style="max-width:220px;">
             <label>Precio (¥ yenes)</label>
             <input id="new-price" type="number" min="0" placeholder="1000">
+          </div>
+          <div class="field">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="new-has-boost" checked style="width:auto;"> Este pack tiene versión Boost (doble de precio)
+            </label>
           </div>
           <div class="field"><label>Descripción (Español) — se muestra al hacer clic en el producto</label></div>
           <div class="rte-field">
