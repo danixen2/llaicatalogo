@@ -33,10 +33,12 @@ async function init() {
 }
 
 // Si un pack no tiene versión Boost pero quedó guardada en el carrito de una visita anterior, lo corrige a Base.
+// También asegura que los items guardados antes de la función "seleccionar" tengan un valor por defecto.
 function normalizeCart() {
   const items = getCart();
   let changed = false;
   items.forEach(it => {
+    if (it.selected === undefined) { it.selected = true; changed = true; }
     const product = cartState.products.find(p => p.id === it.productId);
     if (product && product.hasBoost === false && it.version === 'boost') {
       it.version = 'base';
@@ -75,7 +77,8 @@ function renderCart() {
     const product = cartState.products.find(p => p.id === item.productId);
     if (!product) return '';
     const price = versionPrice(product, item.version);
-    total += price;
+    const isSelected = item.selected !== false;
+    if (isSelected) total += price;
     const name = localizedField(product, 'name', L);
     const hasBoost = product.hasBoost !== false;
 
@@ -89,7 +92,10 @@ function renderCart() {
     `;
 
     return `
-      <div class="cart-item">
+      <div class="cart-item${isSelected ? '' : ' deselected'}">
+        <label class="select-toggle" title="${t('include_in_total', L)}">
+          <input type="checkbox" ${isSelected ? 'checked' : ''} data-select-pid="${escapeAttr(item.productId)}" data-select-v="${escapeAttr(item.version)}">
+        </label>
         <img src="${escapeHtml(product.image || '')}" alt="${escapeHtml(name)}">
         <div>
           <h3>${escapeHtml(name)}</h3>
@@ -104,7 +110,14 @@ function renderCart() {
   }).join('');
 
   document.getElementById('total-value').textContent = formatYen(total);
-  pdfBtn.disabled = false;
+  pdfBtn.disabled = items.length === 0;
+
+  container.querySelectorAll('[data-select-pid]').forEach(chk => {
+    chk.addEventListener('change', (e) => {
+      setCartItemSelected(e.target.dataset.selectPid, e.target.dataset.selectV, e.target.checked);
+      renderCart();
+    });
+  });
 
   container.querySelectorAll('input[type="radio"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
@@ -133,18 +146,41 @@ function escapeAttr(str) { return (str || '').replace(/"/g, '&quot;'); }
 
 // ---------- Carga de imágenes para el PDF (con opción a blanco y negro) ----------
 
-async function loadImageAsDataUrl(url, grayscale) {
+// Carga una imagen y la recorta al centro para que encaje EXACTO en el rectángulo destino
+// sin deformarse (equivalente a "object-fit: cover" en CSS). circular=true además la recorta en círculo.
+async function loadCoverImageDataUrl(url, { grayscale = false, targetAspect = 1, circular = false, outWidth = 1200 } = {}) {
   try {
     const res = await fetch(url, { mode: 'cors' });
     if (!res.ok) throw new Error('No se pudo descargar la imagen');
     const blob = await res.blob();
     const bitmap = await createImageBitmap(blob);
+    const bw = bitmap.width, bh = bitmap.height;
+    const srcAspect = bw / bh;
+
+    let sx = 0, sy = 0, sw = bw, sh = bh;
+    if (srcAspect > targetAspect) {
+      sw = bh * targetAspect;
+      sx = (bw - sw) / 2;
+    } else if (srcAspect < targetAspect) {
+      sh = bw / targetAspect;
+      sy = (bh - sh) / 2;
+    }
+
+    const outHeight = Math.round(outWidth / targetAspect);
     const canvas = document.createElement('canvas');
-    canvas.width = bitmap.width;
-    canvas.height = bitmap.height;
+    canvas.width = outWidth;
+    canvas.height = outHeight;
     const ctx = canvas.getContext('2d');
+
+    if (circular) {
+      ctx.beginPath();
+      ctx.arc(outWidth / 2, outHeight / 2, Math.min(outWidth, outHeight) / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+    }
+
     if (grayscale) ctx.filter = 'grayscale(100%)';
-    ctx.drawImage(bitmap, 0, 0);
+    ctx.drawImage(bitmap, sx, sy, sw, sh, 0, 0, outWidth, outHeight);
     return canvas.toDataURL('image/png');
   } catch (e) {
     console.warn('No se pudo incrustar la imagen en el PDF (posiblemente el hosting de la imagen no permite CORS):', e);
@@ -168,7 +204,8 @@ async function generateReceiptPdf() {
     doc.addFileToVFS('NotoSansJP-subset.ttf', NOTO_SANS_JP_SUBSET_BASE64);
     doc.addFont('NotoSansJP-subset.ttf', 'NotoSansJP', 'normal');
 
-    const items = getCart();
+    const items = getCart().filter(it => it.selected !== false);
+    if (items.length === 0) { alert('No hay packs seleccionados para incluir en el recibo.'); return; }
     const brandName = cartState.site.brandName || 'Catalog';
     const pageWidth = doc.internal.pageSize.getWidth();
     const marginX = 40;
@@ -177,11 +214,14 @@ async function generateReceiptPdf() {
     const logoStyle = cartState.site.receiptLogoStyle || 'none';
     const bannerStyle = cartState.site.receiptBannerStyle || 'none';
 
-    // Banner (ancho completo, arriba de todo)
+    // Banner (ancho completo, arriba de todo) — se recorta al centro para no deformarse.
     if (bannerStyle !== 'none' && cartState.site.heroImage) {
-      const dataUrl = await loadImageAsDataUrl(cartState.site.heroImage, bannerStyle === 'grayscale');
+      const bannerH = 90;
+      const dataUrl = await loadCoverImageDataUrl(cartState.site.heroImage, {
+        grayscale: bannerStyle === 'grayscale',
+        targetAspect: pageWidth / bannerH,
+      });
       if (dataUrl) {
-        const bannerH = 90;
         doc.addImage(dataUrl, 'PNG', 0, 0, pageWidth, bannerH);
         y = bannerH + 30;
       }
@@ -191,9 +231,14 @@ async function generateReceiptPdf() {
     let textX = marginX;
     let logoBottom = y;
     if (logoStyle !== 'none' && cartState.site.avatarImage) {
-      const dataUrl = await loadImageAsDataUrl(cartState.site.avatarImage, logoStyle === 'grayscale');
+      const logoSize = 46;
+      const dataUrl = await loadCoverImageDataUrl(cartState.site.avatarImage, {
+        grayscale: logoStyle === 'grayscale',
+        targetAspect: 1,
+        circular: true,
+        outWidth: 300,
+      });
       if (dataUrl) {
-        const logoSize = 46;
         doc.addImage(dataUrl, 'PNG', marginX, y, logoSize, logoSize);
         textX = marginX + logoSize + 12;
         logoBottom = y + logoSize;
