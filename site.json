@@ -45,6 +45,12 @@
       "label": "Email",
       "icon": "",
       "link": "mailto:tuemail@ejemplo.com"
+    },
+    {
+      "id": "c-1786828102636",
+      "label": "Servidor de Discord",
+      "icon": "https://iili.io/CiUdUTF.png",
+      "link": "https://discord.gg/H4wPT3Thcr"
     }
   ],
   "orderLink": "https://discord.com/invite/H4wPT3Thcr",
