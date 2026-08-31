@@ -266,5 +266,22 @@
     "publishedAt": "2026-05-08",
     "price": 750,
     "hasBoost": true
+  },
+  {
+    "id": "pack-1788217262643",
+    "name": "Takami Chika & Watanabe You (Close Friends) 1105 Imagenes - 30 Animaciones",
+    "category": "Aqours",
+    "image": "https://iili.io/n9nMB3v.webp",
+    "description": "",
+    "tags": [],
+    "purchaseLink": "",
+    "sampleLink": "",
+    "name_en": "",
+    "description_en": "",
+    "name_ja": "",
+    "description_ja": "",
+    "publishedAt": "2026-05-01",
+    "price": 2000,
+    "hasBoost": true
   }
 ]
