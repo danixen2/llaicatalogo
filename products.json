@@ -297,5 +297,26 @@
     "publishedAt": "2026-05-01",
     "price": 2000,
     "hasBoost": true
+  },
+  {
+    "id": "pack-1788302128118",
+    "name": "Anyoji Hime (School Uniform)",
+    "category": "Hasus",
+    "image": "https://iili.io/n9sGZj1.webp",
+    "description": "",
+    "tags": [
+      "Love Live!",
+      "Anyoji Hime",
+      "Hasu no Sora"
+    ],
+    "purchaseLink": "",
+    "sampleLink": "",
+    "name_en": "",
+    "description_en": "",
+    "name_ja": "",
+    "description_ja": "",
+    "publishedAt": "2026-04-24",
+    "price": 420,
+    "hasBoost": true
   }
 ]
