@@ -432,5 +432,22 @@
     "publishedAt": "2026-09-25",
     "price": 800,
     "hasBoost": true
+  },
+  {
+    "id": "pack-1791227251531",
+    "name": "Kurosawa Ruby (Sweet Trap) 437 Imagenes + 26 Animaciones",
+    "category": "Aqours",
+    "image": "https://iili.io/n1J8n1t.jpg",
+    "description": "",
+    "tags": [],
+    "purchaseLink": "",
+    "sampleLink": "",
+    "name_en": "",
+    "description_en": "",
+    "name_ja": "",
+    "description_ja": "",
+    "publishedAt": "2026-10-02",
+    "price": 650,
+    "hasBoost": true
   }
 ]
